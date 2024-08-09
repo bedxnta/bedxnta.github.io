@@ -1,37 +1,99 @@
 body {
-    background-color: #000;
-    color: #fff;
-    font-family: Fira Code, monospace;
-    margin: 0;
-    padding: 0;
-}
-
-.gallery {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    max-width: 1600px;
-    margin: 20px auto;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #0c0c13;
+    font-family: Consolas, Monaco, Lucida Console, Courier New, monospace;
+    font-size: 14px;
+    color: #cdd6f4;
 }
 
-.gallery img {
-    width: calc(33.33% - 20px);
-    max-width: 400px;
-    height: auto;
-    border-radius: 10px;
-    border: 2px solid #cad3f5;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+.window {
+    width: 70%;
+    max-width: 1000px;
+    height: 80%;
+    background-color: #21242b;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-@media (max-width: 900px) {
-    .gallery img {
-        width: calc(50% - 20px);
-    }
+.window-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+    background-color: #13131d;
 }
 
-@media (max-width: 600px) {
-    .gallery img {
-        width: calc(100% - 20px);
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background-color: #f38ba8; }
+.minimize { background-color: #f9e2af; }
+.maximize { background-color: #a6e3a1; }
+
+.window-content {
+    flex-grow: 1;
+    padding: 15px;
+    color: #ffffff;
+    background-color: #1e1e2e;
+    overflow-y: auto;
+}
+
+.terminal-content {
+    margin: 0;
+    white-space: pre-wrap;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.ascii-art {
+    color: #89dceb;
+    font-size: 12px;
+    text-shadow: 0 0 5px #89dceb, 0 0 10px #89dceb;
+}
+
+a {
+    color: #89b4fa;
+    text-decoration: underline;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+    color: #c2d9fd;
+    text-shadow: 0 0 1px #c2d9fd, 0 0 2px #c2d9fd;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.cursor {
+    display: inline-block;
+    width: 6px;
+    height: 2px;
+    background-color: #ffffff;
+    animation: cursor-blink 1s infinite;
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@media screen and (max-width: 768px) {
+    .ascii-art {
+        display: none;
     }
 }

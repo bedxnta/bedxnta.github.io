@@ -1,0 +1,37 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Fira Code, monospace;
+    margin: 0;
+    padding: 0;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1600px;
+    margin: 20px auto;
+}
+
+.gallery img {
+    width: calc(33.33% - 20px);
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #cad3f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 900px) {
+    .gallery img {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery img {
+        width: calc(100% - 20px);
+    }
+}
