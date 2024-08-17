@@ -1,104 +1,18 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #0c0c13;
-    font-family: Consolas, Monaco, Lucida Console, Courier New, monospace;
-    font-size: 14px;
-    color: #cdd6f4;
-}
+@import url("https://fonts.xz.style/serve/ubuntu-mono.css");
 
-.window {
-    width: 65%;
-    max-width: 1000px;
-    height: 80%;
-    background-color: #21242b;
-    border: 1px solid #d0d0d0;
-    border-radius: 5px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+:root {
+	--nc-font-sans: 'Ubuntu Mono', monospace;
+	--nc-font-mono: 'Ubuntu Mono', monospace;
+    font-size: 17px;
 
-.window-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 8px;
-    background-color: #13131d;
-}
-
-.buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.close { background-color: #f38ba8; }
-.minimize { background-color: #f9e2af; }
-.maximize { background-color: #a6e3a1; }
-
-.window-content {
-    flex-grow: 1;
-    padding: 15px;
-    color: #ffffff;
-    background-color: #1e1e2e;
-    overflow-y: auto;
-}
-
-.terminal-content {
-    margin: 0;
-    white-space: pre-wrap;
-    color: #ffffff;
-    line-height: 1.2;
-}
-
-.ascii-art {
-    color: #89dceb;
-    font-size: 12px;
-    text-shadow: 0 0 5px #89dceb, 0 0 10px #89dceb;
-}
-
-a {
-    color: #89b4fa;
-    text-decoration: underline;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-a:hover {
-    color: #c2d9fd;
-    text-shadow: 0 0 1px #c2d9fd, 0 0 2px #c2d9fd;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.cursor {
-    display: inline-block;
-    width: 6px;
-    height: 2px;
-    background-color: #ffffff;
-    animation: cursor-blink 1s infinite;
-}
-
-@keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-@media screen and (max-width: 768px) {
-    .ascii-art {
-        display: none;
-    }
-
-    .window {
-        width: 95%;
-        height: 95%;
-    }
+	--nc-tx-1: #cdd6f4;
+	--nc-tx-2: #eeeeee;
+	--nc-bg-1: #1e1e2e;
+	--nc-bg-2: #181825;
+	--nc-bg-3: #11111b;
+	--nc-lk-1: #74c7ec;
+	--nc-lk-2: #89b4fa;
+	--nc-lk-tx: #cdd6f4;
+	--nc-ac-1: #b4befe;
+	--nc-ac-tx: #11111b;
 }
