@@ -15,3 +15,15 @@
     --nc-ac-1: #b4befe;
     --nc-ac-tx: #11111b;
 }
+
+.piplup {
+  float: right;
+  margin-top: 130px;
+  padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .piplup {
+    display: none;
+  }
+}
