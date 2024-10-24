@@ -9,7 +9,7 @@
     --nc-bg-1: #1e1e2e;
     --nc-bg-2: #181825;
     --nc-bg-3: #11111b;
-    --nc-lk-1: #74c7ec;
+    --nc-lk-1: #4d9fc5;
     --nc-lk-2: #89b4fa;
     --nc-lk-tx: #cdd6f4;
     --nc-ac-1: #b4befe;
@@ -19,6 +19,12 @@
 .piplup {
   float: right;
   margin-top: 130px;
+  padding: 0;
+}
+
+.d4c{
+  float: right;
+  margin-top: 50px;
   padding: 0;
 }
 
