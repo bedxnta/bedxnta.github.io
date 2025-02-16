@@ -237,3 +237,11 @@
 
   init();
 })();
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+      alert("Copied mail to clipboard.");
+  }).catch(err => {
+      console.error("Failed to copy: ", err);
+  });
+}
