@@ -1,34 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bedanta.me // donate</title>
-    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
-    <link rel="stylesheet" href="/styles.css">
-    <meta name="darkreader-lock">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>bedanta.me // donate</title>
+  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://kit.fontawesome.com/04c5cc98c2.js" crossorigin="anonymous"></script>
+  <meta name="darkreader-lock" />
 </head>
 
 <body>
-    <header>
-        <h1><span style="color: pink;">ᓚᘏᗢ</span> <mark>// donate</mark></h1><br>
-        <p><a href="/">home</a> / <a href="donate/">donate</a></p>
-    </header>
+  <header>
+    <h1><span style="color: pink;">ᓚᘏᗢ</span> <mark>// donate</mark></h1><br>
+    <p><a href="/">home</a> / <a href="/projects">projects</a> / <a href="/donate">donate</a></p>
+  </header>
 
-    <ul>
-        <li><b>UPI ID (India Only): </b><code>bedantadey@sbi</code><br>
-            <a href="/static/upi.jpeg" target="_blank">Click here for QR code</a></li>
-        <li><b>PayPal: </b><a href="https://paypal.me/bedxnta" target="_blank">bedxnta</a></li><br>
-        <li><b>Cryptocurrency:</b></li>
-        <ul>
-            <li><b>[Ł] Litecoin (LTC):</b> <code>ltc1q8sws2ay3w7q2rtlsec5x83qkskkmmtcsx3pqax</code></li>
-            <li><b>[Ξ] Ethereum (ETH):</b> <code>0x0D4e2DDb8Bf3021C15e98fe354beAAA216685723</code></li>
-            <li><b>[₿] Bitcoin (BTC):</b> <code>bc1q9u8kll6y2t3lq5qzzkt9jtl3026f0c2xl8ad2z</code></li>
-    </ul><br>
+  
+  <h3>Non-Crypto:</h3>
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+    
+    <a href="#" onclick="copyToClipboard('bedantadey@sbi', 'UPI ID')" style="text-decoration: none;">
+      <mark><i class="fa-solid fa-indian-rupee-sign"></i> UPI</mark>
+    </a>
 
+   
+    <a href="/static/upi.jpeg" target="_blank" style="text-decoration: none;">
+      <mark><i class="fas fa-qrcode"></i> UPI (QR)</mark>
+    </a>
 
-    <p>Donating really helps, as it will make my college life slightly less of a financial horror show.</p>
+    
+    <a href="https://paypal.me/bedxnta" target="_blank" style="text-decoration: none;">
+      <mark><i class="fab fa-paypal"></i> PayPal</mark>
+    </a>
+  </div><br>
 
+  
+  <h3>Cryptocurrency:</h3>
+  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+    
+    <a href="#" onclick="copyToClipboard('ltc1q8sws2ay3w7q2rtlsec5x83qkskkmmtcsx3pqax', 'Litecoin')" style="text-decoration: none;">
+      <mark><i class="fa-solid fa-litecoin-sign"></i> Litecoin [LTC]</mark>
+    </a>
+
+   
+    <a href="#" onclick="copyToClipboard('0x0D4e2DDb8Bf3021C15e98fe354beAAA216685723', 'Ethereum')" style="text-decoration: none;">
+      <mark><i class="fab fa-ethereum"></i> Ethereum [ETH]</mark>
+    </a>
+
+    
+    <a href="#" onclick="copyToClipboard('bc1q9u8kll6y2t3lq5qzzkt9jtl3026f0c2xl8ad2z', 'Bitcoin')" style="text-decoration: none;">
+      <mark><i class="fab fa-bitcoin"></i> Bitcoin [BTC]</mark>
+    </a>
+  </div><br>
+
+  <p>Donating really helps, as it will make my college life slightly less of a financial horror show.</p>
+
+  <script>
+    function copyToClipboard(text, label) {
+      navigator.clipboard.writeText(text);
+      alert("Copied " + label + " to clipboard: " + text);
+    }
+  </script>
 </body>
 </html>

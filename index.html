@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/04c5cc98c2.js" crossorigin="anonymous"></script>
     <meta name="darkreader-lock">
 </head>
 
 <body>
     <header>
         <h1><span style="color: pink;">ᓚᘏᗢ</span> <mark>bedanta.me</mark></h1><br>
-        <p><a href="/">home</a> / <a href="donate/">donate</a></p>
+        <p><a href="/">home</a> / <a href="projects/">projects</a> / <a href="donate/">donate</a></p>
     </header>
 
-    <p>Hi, I'm Bedanta — Cosmo online. I'm 19. I read (books), watch (shows), and listen (to music). I value calm, clarity, and growth.</p><br>
+    <p>Hi, I'm Bedanta — Cosmo online. I'm 19. I read (books), play (games) and listen (to music). I value clarity and growth.</p><br>
 
     <h3 style="margin-bottom: 20px;"><span style="color:#74c7ec;">//</span> some facts about me:</h3>
     <ul>
@@ -27,12 +28,56 @@
 
     <h3 style="margin-bottom: 20px;"><span style="color:#74c7ec;">//</span> places to find me:</h3>
     <img class="pkmn" src="static/samurott.gif">
-    <ul>
-        <li><b>Discord: </b><code>@bedanjo</code></li>
-        <li><b>Spotify: </b><a href="https://open.spotify.com/user/31eriwjxqidtdks44z6d363bfw3m" target="_blank">Bedanta ~</a></li>
-        <li><b>Instagram: </b><a href="https://instagram.com/cosmeowx" target="_blank">bedanta</a></li>
-        <li><b>Steam: </b><a href="https://steamcommunity.com/id/cosmeowx/" target="_blank">Cosmo</a></li>
-    </ul>
 
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 1em;">
+        <a href="https://github.com/bedxnta" target="_blank" style="text-decoration: none;">
+            <mark><i class="fab fa-github"></i> GitHub</mark>
+        </a>
+
+        <a href="#" onclick="copyDiscordTag(); return false;" style="text-decoration: none;">
+            <mark><i class="fab fa-discord"></i> Discord</mark>
+        </a>
+
+        <a href="https://open.spotify.com/user/31eriwjxqidtdks44z6d363bfw3m" target="_blank" style="text-decoration: none;">
+            <mark><i class="fab fa-spotify"></i> Spotify</mark>
+        </a>
+
+        <a href="https://instagram.com/cosmeowx" target="_blank" style="text-decoration: none;">
+            <mark><i class="fab fa-instagram"></i> Instagram</mark>
+        </a>
+
+        <a href="https://x.com/bedxnta" target="_blank" style="text-decoration: none;">
+            <mark><i class="fa-brands fa-x-twitter"></i> X</mark>
+        </a>
+
+        <a href="https://youtube.com/@uhCosmo" target="_blank" style="text-decoration: none;">
+            <mark><i class="fa-brands fa-youtube"></i> YouTube</mark>
+        </a>
+
+        <a href="https://steamcommunity.com/id/cosmeowx/" target="_blank" style="text-decoration: none;">
+            <mark><i class="fab fa-steam"></i> Steam</mark>
+        </a>
+
+        <a href="https://namemc.com/profile/Cosmeoww.1" target="_blank" style="text-decoration: none;">
+            <mark><i class="fa-solid fa-gem"></i> NameMC</mark>
+        </a>
+
+        <a href="#" onclick="copyMail(); return false;" style="text-decoration: none;">
+            <mark><i class="fas fa-envelope"></i> Email</mark>
+        </a>
+    </div>
+
+
+<script>
+    function copyDiscordTag() {
+    navigator.clipboard.writeText("@bedanjo");
+    alert("Copied username to clipboard: @bedanjo");
+    }
+
+    function copyMail() {
+        navigator.clipboard.writeText("bdey17[at]proton[dot]me");
+        alert("Copied email to clipboard. Please replace [at] with @ and [dot] with .");
+    }
+</script>
 </body>
 </html>
