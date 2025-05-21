@@ -16,6 +16,13 @@
     --nc-ac-tx: #11111b;
 }
 
+mark.wou {
+  background-color: goldenrod;
+  color: #fff;
+  font-weight: bold;
+}
+
+
 .pkmn {
     float: right;
     margin-top: -165px;
