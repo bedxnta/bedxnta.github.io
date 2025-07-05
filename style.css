@@ -1,0 +1,181 @@
+@font-face {
+  font-family: 'Pixel';
+  src: url('https://fonts.cdnfonts.com/s/15307/Perfect DOS VGA 437.woff') format('woff');
+}
+
+body {
+  font-family: 'Pixel', monospace;
+  background: url('https://i.imgur.com/1H7qDkr.png'); /* Optional retro tile */
+  background-color: #000;
+  color: #d3d3d3;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #111;
+  border: 3px double #888;
+  padding: 10px;
+  box-shadow: 0 0 20px #666;
+}
+
+header {
+  text-align: center;
+  background-color: #222;
+  padding: 10px;
+  border-bottom: 2px dashed #888;
+}
+
+header h1 {
+  font-size: 28px;
+  color: #ccc;
+  margin: 0;
+}
+
+marquee {
+  color: #bbb;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+nav {
+  margin: 10px 0;
+  background-color: #000;
+  border: 2px groove #666;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+
+nav a {
+  color: #aaa;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 10px;
+}
+
+main h2, main h3 {
+  color: #ccc;
+}
+
+button {
+  background: #888;
+  color: black;
+  border: 2px inset #444;
+  font-family: 'Pixel', monospace;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #999;
+}
+
+
+/* Projects Section */
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.project-item {
+  background-color: #1a1a1a;
+  border: 2px dashed #777;
+  padding: 15px;
+  width: 340px; /* adjust width for more side space */
+  text-align: center;
+  box-shadow: 0 0 10px #555;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px; /* adjust for more or less vertical space */
+}
+
+.project-item h3 {
+  color: #ccc;
+  margin-top: 0;
+}
+
+.project-item p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.project-item button,
+button {
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.project-item button:hover,
+button:hover {
+  background: #aaa;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+
+.project-item button:disabled {
+  background: #444;
+  cursor: not-allowed;
+  color: #999;
+}
+
+/* Socials Section */
+.socials-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #1a1a1a;
+  border: 2px dashed #777;
+  padding: 12px 20px;
+  color: #ccc;
+  text-decoration: none;
+  font-family: 'Pixel', monospace;
+  font-size: 14px;
+  box-shadow: 0 0 10px #555;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.social-button i {
+  font-size: 20px;
+}
+
+.social-button:hover {
+  background: #333;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.social-button span {
+  flex-grow: 1;
+}
+

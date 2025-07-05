@@ -1,81 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bedanta.me</title>
-    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://kit.fontawesome.com/04c5cc98c2.js" crossorigin="anonymous"></script>
-    <meta name="darkreader-lock">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bedanta's Retro Corner</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
-
 <body>
+  <div class="wrapper">
     <header>
-        <h1><span style="color: pink;">ᓚᘏᗢ</span> <mark>bedanta.me</mark></h1><br>
-        <p><a href="/">home</a> / <a href="projects/">projects</a> / <a href="donate/">donate</a></p>
+      <h1>🕹️ Bedanta's Webpage</h1>
     </header>
 
-    <h1>THIS WEBSITE WILL SOON BE MOVING TO <mark>bedanjo.live</mark> !</h1>
-    <hr><br>
-    
-    <p>Hi, I'm Bedanta — Cosmo online. I'm 19. I read (books), play (games) and listen (to music). I value clarity and growth.</p><br>
+    <nav>
+      <ul>
+        <li><a href="#"><b><u>Main</u></b></a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="socials.html">Socials</a></li>
+      </ul>
+    </nav>
 
-    <h3 style="margin-bottom: 20px;"><span style="color:#74c7ec;">//</span> some facts about me:</h3>
-    <ul>
-        <li>I don't like ads.</li>
-        <li>I like cats and turtles.</li>
-        <li><a href=https://undertale.com/ target="_blank">UNDERTALE</a> is my favorite game.</li>
-    </ul><br>
+    <main>
+      <h2>🌟 About Me</h2>
+      <p>Hey there! I'm <strong>Bedanta</strong> and I am a 19 year old student, reader and programmer. I like to listen to music and watch anime, TV shows and movies.</p>
 
-    <h3 style="margin-bottom: 20px;"><span style="color:#74c7ec;">//</span> places to find me:</h3>
-    <img class="pkmn" src="static/samurott.gif">
+      <h3>🎮 Projects I'm Working On</h3>
+      <ul>
+        <li>Shock! - A space invaders-like game for Windows, Linux and Android</li>
+        <li>CCPS - A controller clicks per second tester, right in your browser</li>
+        <li>Personal website with an old-school aesthetic (you're looking at it!)</li>
+        <li>Wonder Of U - A versatile Discord user application with multiple commands</li>
+      </ul>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 1em;">
-        <a href="https://github.com/bedxnta" target="_blank" style="text-decoration: none;">
-            <mark><i class="fab fa-github"></i> GitHub</mark>
-        </a>
+      <h3>📝 Blogs (coming soon!)</h3>
+      <p>I'll be posting thoughts on life, coding, creativity and more. Stay tuned!</p>
 
-        <a href="#" onclick="copyDiscordTag(); return false;" style="text-decoration: none;">
-            <mark><i class="fab fa-discord"></i> Discord</mark>
-        </a>
+      <h3>📷 Gallery</h3>
+      <p>Just some pictures that I have laying around, showcased here neatly.</p>
+    </main>
 
-        <a href="https://open.spotify.com/user/31eriwjxqidtdks44z6d363bfw3m" target="_blank" style="text-decoration: none;">
-            <mark><i class="fab fa-spotify"></i> Spotify</mark>
-        </a>
-
-        <a href="https://instagram.com/cosmeowx" target="_blank" style="text-decoration: none;">
-            <mark><i class="fab fa-instagram"></i> Instagram</mark>
-        </a>
-
-        <a href="https://tumblr.com/cosmoberries" target="_blank" style="text-decoration: none;">
-            <mark><i class="fab fa-tumblr"></i> Tumblr</mark>
-        </a>
-
-        <a href="https://x.com/bedxnta" target="_blank" style="text-decoration: none;">
-            <mark><i class="fa-brands fa-x-twitter"></i> X</mark>
-        </a>
-
-        <a href="https://youtube.com/@uhCosmo" target="_blank" style="text-decoration: none;">
-            <mark><i class="fa-brands fa-youtube"></i> YouTube</mark>
-        </a>
-
-        <a href="https://steamcommunity.com/id/cosmeowx/" target="_blank" style="text-decoration: none;">
-            <mark><i class="fab fa-steam"></i> Steam</mark>
-        </a>
-
-        <a href="https://namemc.com/profile/Cosmeoww.1" target="_blank" style="text-decoration: none;">
-            <mark><i class="fa-solid fa-gem"></i> NameMC</mark>
-        </a>
-    </div>
-
-
-<script>
-    function copyDiscordTag() {
-    navigator.clipboard.writeText("@bedanjo");
-    alert("Copied username to clipboard: @bedanjo");
-    }
-</script>
+    <footer>
+      <p>Made with 💾 and nostalgia.</p>
+    </footer>
+  </div>
 </body>
 </html>
