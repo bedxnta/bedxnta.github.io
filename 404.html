@@ -202,7 +202,6 @@
 <body>
     <div class="game-window">
         <div class="window-header">
-            <!-- Changed to static "404: PAGE NOT FOUND" -->
             <div class="window-time" id="clock">404: PAGE NOT FOUND</div>
             <div class="window-controls">
                 <span class="control-button control-minimize"></span>
@@ -217,8 +216,7 @@
             <div class="tip-text" id="gameTip">Press Space/↑ to play!</div>
             <div class="game-over-screen hidden" id="gameOverScreen">
                 <p>Game Over!</p>
-                <p id="finalScoreDisplay"></p> <!-- Added for final score -->
-                <button class="restart-button" id="restartButton">Restart</button>
+                <p id="finalScoreDisplay"></p> <button class="restart-button" id="restartButton">Restart</button>
             </div>
         </div>
     </div>
@@ -265,8 +263,6 @@
             { width: 80, height: 25 }
         ];
 
-        // Removed updateClock function as per request, clock display is now static
-
         // Event handler for keyboard input - moved up for scope
         const handleKeyDown = (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp') {
@@ -308,7 +304,7 @@
 
             const config = CLOUD_CONFIGS[Math.floor(Math.random() * CLOUD_CONFIGS.length)];
 
-            let cloudLeft = -config.width;
+            let cloudLeft = gameContainer.offsetWidth; // Start from the right edge
             const minCloudBottom = gameContainer.offsetHeight * 0.3;
             const maxCloudBottom = gameContainer.offsetHeight * 0.8;
             let cloudBottom = Math.random() * (maxCloudBottom - minCloudBottom) + minCloudBottom;
@@ -366,10 +362,10 @@
             });
 
             clouds.forEach((cloud, index) => {
-                cloud.left += CLOUD_SPEED;
+                cloud.left -= CLOUD_SPEED; 
                 cloud.element.style.left = cloud.left + 'px';
 
-                if (cloud.left > gameContainer.offsetWidth) {
+                if (cloud.left < -cloud.width) { 
                     cloud.element.remove();
                     clouds.splice(index, 1);
                 }
@@ -399,7 +395,6 @@
             if (obstacleGenerationInterval) clearInterval(obstacleGenerationInterval);
             if (cloudGenerationInterval) clearInterval(cloudGenerationInterval);
 
-            // Ensure event listeners are correctly added after functions are defined
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('touchstart', handleTouchStart);
             document.addEventListener('keydown', handleKeyDown);
