@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Runner - Terminal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #0c0c13; /* From provided CSS */
+            font-family: Consolas, Monaco, 'Lucida Console', 'Liberation Mono', 'Courier New', monospace; /* From provided CSS */
+            font-size: 15px;
+            color: #cdd6f4; /* From provided CSS */
+            overflow: hidden;
+        }
+
+        .game-window {
+            width: 90vw;
+            max-width: 800px;
+            height: 65vh; /* Adjusted height to be more like a window */
+            background-color: #21242b; /* From provided CSS */
+            border: 1px solid #d0d0d0;
+            border-radius: 5px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(255, 255, 255, 0.12),
+                        0 0 50px rgba(255, 255, 255, 0.06); /* From provided CSS */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative; /* For absolute positioning of game elements */
+        }
+
+        .window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: #13131d; /* From provided CSS */
+            color: #cdd6f4;
+            font-size: 14px;
+        }
+
+        .window-time {
+            font-family: monospace;
+            white-space: nowrap;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .control-close { background-color: #f38ba8; }
+        .control-minimize { background-color: #f9e2af; }
+        .control-maximize { background-color: #a6e3a1; }
+
+        .game-container {
+            flex-grow: 1;
+            background-color: #1e1e2e; /* From provided CSS */
+            position: relative;
+            overflow: hidden; /* Hide game elements outside the view */
+            border-radius: 0 0 5px 5px; /* Match bottom border radius of window */
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px; /* Thinner ground */
+            background-color: #333642; /* Darker ground color */
+            z-index: 1;
+        }
+
+        .dino {
+            position: absolute;
+            bottom: 10px; /* Above the ground */
+            left: 50px;
+            width: 30px; /* Slightly smaller dino */
+            height: 30px;
+            background-color: #89b4fa; /* Blue color from provided CSS */
+            border-radius: 4px; /* Slightly less rounded */
+            z-index: 2;
+            box-shadow: 0 0 5px #89b4fa, 0 0 10px #89b4fa; /* Glow effect */
+        }
+
+        .obstacle {
+            position: absolute;
+            bottom: 10px; /* Above the ground, dynamic height will adjust upwards */
+            background-color: #f38ba8; /* Pink color from provided CSS */
+            border-radius: 4px;
+            z-index: 2;
+            box-shadow: 0 0 5px #f38ba8, 0 0 10px #f38ba8; /* Glow effect */
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: #6c7086; /* Lighter grey for clouds */
+            border-radius: 4px;
+            opacity: 0.7; /* Make clouds slightly transparent */
+            z-index: 0; /* Behind other game elements */
+            box-shadow: 0 0 3px #6c7086; /* Subtle glow */
+        }
+
+        .game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 30, 46, 0.9); /* Semi-transparent version of game container background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #cdd6f4;
+            font-size: 1.8em;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .score {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.2em;
+            color: #cdd6f4;
+            z-index: 5;
+            text-shadow: 0 0 5px #cdd6f4;
+        }
+
+        .tip-text {
+            position: absolute;
+            top: 40px; /* Positioned below the score */
+            right: 15px;
+            font-size: 0.9em; /* Slightly smaller font for the tip */
+            color: #cdd6f4;
+            opacity: 0.8; /* Make it slightly faded */
+            z-index: 5;
+            text-shadow: 0 0 3px #cdd6f4;
+        }
+
+        .restart-button {
+            background-color: #a6e3a1; /* Green color from provided CSS */
+            color: #1e1e2e; /* Dark text for contrast */
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 8px #a6e3a1; /* Glow effect */
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .restart-button:hover {
+            background-color: #94e2d5; /* Lighter green on hover */
+            box-shadow: 0 0 12px #94e2d5;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .game-window {
+                height: 50vh;
+            }
+            .dino {
+                width: 25px;
+                height: 25px;
+                left: 30px;
+            }
+            .obstacle {
+                width: 18px;
+                height: 35px;
+            }
+            .game-over-screen {
+                font-size: 1.2em;
+            }
+            .score {
+                font-size: 1em;
+            }
+            .tip-text {
+                font-size: 0.8em;
+                top: 30px; /* Adjust tip position for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-window">
+        <div class="window-header">
+            <!-- Changed to static "404: PAGE NOT FOUND" -->
+            <div class="window-time" id="clock">404: PAGE NOT FOUND</div>
+            <div class="window-controls">
+                <span class="control-button control-minimize"></span>
+                <span class="control-button control-maximize"></span>
+                <span class="control-button control-close"></span>
+            </div>
+        </div>
+        <div class="game-container" id="gameContainer">
+            <div class="ground"></div>
+            <div class="dino" id="dino"></div>
+            <div class="score" id="score">Score: 0</div>
+            <div class="tip-text" id="gameTip">Press Space/↑ to play!</div>
+            <div class="game-over-screen hidden" id="gameOverScreen">
+                <p>Game Over!</p>
+                <p id="finalScoreDisplay"></p> <!-- Added for final score -->
+                <button class="restart-button" id="restartButton">Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gameContainer = document.getElementById('gameContainer');
+        const dino = document.getElementById('dino');
+        const scoreDisplay = document.getElementById('score');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const restartButton = document.getElementById('restartButton');
+        const finalScoreDisplay = document.getElementById('finalScoreDisplay'); // New element for final score
+        const gameTip = document.getElementById('gameTip'); // New element for the tip
+
+        let isJumping = false;
+        const GRAVITY = 0.5; // User's preferred gravity
+        const JUMP_VELOCITY = 14; // User's preferred jump velocity
+        const GROUND_HEIGHT = 10;
+        let dinoBottom = GROUND_HEIGHT;
+        let dinoVelocityY = 0;
+
+        let obstacles = [];
+        let clouds = [];
+        let score = 0;
+        const INITIAL_GAME_SPEED = 3;
+        const SPEED_INCREMENT = 0.02;
+        const CLOUD_SPEED = 0.5;
+
+        let gameSpeed = INITIAL_GAME_SPEED;
+        let gameOver = false;
+        let animationFrameId;
+
+        let obstacleGenerationInterval;
+        let cloudGenerationInterval;
+
+        const OBSTACLE_CONFIGS = [
+            { width: 20, height: 40 },
+            { width: 25, height: 50 },
+            { width: 30, height: 60 }
+        ];
+
+        const CLOUD_CONFIGS = [
+            { width: 40, height: 15 },
+            { width: 60, height: 20 },
+            { width: 80, height: 25 }
+        ];
+
+        // Removed updateClock function as per request, clock display is now static
+
+        // Event handler for keyboard input - moved up for scope
+        const handleKeyDown = (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                jump();
+            }
+        };
+
+        // Event handler for touch input - moved up for scope
+        const handleTouchStart = () => {
+            jump();
+        };
+
+        const jump = () => {
+            if (!isJumping) {
+                isJumping = true;
+                dinoVelocityY = JUMP_VELOCITY;
+            }
+        };
+
+        const generateObstacles = () => {
+            if (gameOver) return;
+
+            const config = OBSTACLE_CONFIGS[Math.floor(Math.random() * OBSTACLE_CONFIGS.length)];
+
+            let obstacleLeft = gameContainer.offsetWidth;
+            const obstacleElement = document.createElement('div');
+            obstacleElement.classList.add('obstacle');
+            obstacleElement.style.width = config.width + 'px';
+            obstacleElement.style.height = config.height + 'px';
+            obstacleElement.style.left = obstacleLeft + 'px';
+            obstacleElement.style.bottom = GROUND_HEIGHT + 'px';
+
+            gameContainer.appendChild(obstacleElement);
+            obstacles.push({ element: obstacleElement, left: obstacleLeft, width: config.width, height: config.height });
+        };
+
+        const generateClouds = () => {
+            if (gameOver) return;
+
+            const config = CLOUD_CONFIGS[Math.floor(Math.random() * CLOUD_CONFIGS.length)];
+
+            let cloudLeft = -config.width;
+            const minCloudBottom = gameContainer.offsetHeight * 0.3;
+            const maxCloudBottom = gameContainer.offsetHeight * 0.8;
+            let cloudBottom = Math.random() * (maxCloudBottom - minCloudBottom) + minCloudBottom;
+
+            const cloudElement = document.createElement('div');
+            cloudElement.classList.add('cloud');
+            cloudElement.style.width = config.width + 'px';
+            cloudElement.style.height = config.height + 'px';
+            cloudElement.style.left = cloudLeft + 'px';
+            cloudElement.style.bottom = cloudBottom + 'px';
+
+            gameContainer.appendChild(cloudElement);
+            clouds.push({ element: cloudElement, left: cloudLeft, width: config.width });
+        };
+
+        const gameLoop = () => {
+            if (gameOver) {
+                cancelAnimationFrame(animationFrameId);
+                return;
+            }
+
+            // Update Dino's vertical position
+            dinoBottom += dinoVelocityY;
+            dinoVelocityY -= GRAVITY;
+
+            if (dinoBottom < GROUND_HEIGHT) {
+                dinoBottom = GROUND_HEIGHT;
+                dinoVelocityY = 0;
+                isJumping = false;
+            }
+            dino.style.bottom = dinoBottom + 'px';
+
+            obstacles.forEach((obstacle, index) => {
+                obstacle.left -= gameSpeed;
+                obstacle.element.style.left = obstacle.left + 'px';
+
+                const dinoRect = dino.getBoundingClientRect();
+                const obstacleRect = obstacle.element.getBoundingClientRect();
+
+                if (obstacleRect.left < dinoRect.right &&
+                    obstacleRect.right > dinoRect.left &&
+                    obstacleRect.top < dinoRect.bottom &&
+                    obstacleRect.bottom > dinoRect.top) {
+                    endGame();
+                    return;
+                }
+
+                if (obstacle.left < -obstacle.width) {
+                    obstacle.element.remove();
+                    obstacles.splice(index, 1);
+                    score++;
+                    scoreDisplay.textContent = 'Score: ' + score;
+                    gameSpeed += SPEED_INCREMENT;
+                }
+            });
+
+            clouds.forEach((cloud, index) => {
+                cloud.left += CLOUD_SPEED;
+                cloud.element.style.left = cloud.left + 'px';
+
+                if (cloud.left > gameContainer.offsetWidth) {
+                    cloud.element.remove();
+                    clouds.splice(index, 1);
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(gameLoop);
+        };
+
+        const startGame = () => {
+            gameOver = false;
+            score = 0;
+            gameSpeed = INITIAL_GAME_SPEED;
+            scoreDisplay.textContent = 'Score: 0';
+            gameOverScreen.classList.add('hidden');
+            gameTip.classList.remove('hidden'); // Show the tip at the start
+            dinoBottom = GROUND_HEIGHT;
+            dino.style.bottom = dinoBottom + 'px';
+            isJumping = false;
+            dinoVelocityY = 0; // Reset velocity
+
+            obstacles.forEach(o => o.element.remove());
+            obstacles = [];
+            clouds.forEach(c => c.element.remove());
+            clouds = [];
+
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (obstacleGenerationInterval) clearInterval(obstacleGenerationInterval);
+            if (cloudGenerationInterval) clearInterval(cloudGenerationInterval);
+
+            // Ensure event listeners are correctly added after functions are defined
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('touchstart', handleTouchStart);
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('touchstart', handleTouchStart);
+
+            obstacleGenerationInterval = setInterval(generateObstacles, 1500);
+            cloudGenerationInterval = setInterval(generateClouds, 3000);
+
+            animationFrameId = requestAnimationFrame(gameLoop);
+        };
+
+        const endGame = () => {
+            gameOver = true;
+            gameOverScreen.classList.remove('hidden');
+            gameTip.classList.add('hidden'); // Hide the tip when game is over
+            finalScoreDisplay.textContent = `Your Score: ${score}`; // Display final score
+            cancelAnimationFrame(animationFrameId);
+            clearInterval(obstacleGenerationInterval);
+            clearInterval(cloudGenerationInterval);
+        };
+
+        restartButton.addEventListener('click', startGame);
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>
