@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Dial Generator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gx: {
+                            dark: '#121212',
+                            panel: '#1e1e24',
+                            accent: '#fa2828', // Opera Red
+                            accentHover: '#ff4c4c',
+                            secondary: '#00ccff', // Cyber Blue
+                            text: '#e0e0e0',
+                            input: '#2b2b33'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f0f12;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(250, 40, 40, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 204, 255, 0.05) 0%, transparent 20%);
+            color: #e0e0e0;
+        }
+        
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #fa2828;
+            cursor: pointer;
+            margin-top: -6px; 
+            box-shadow: 0 0 10px rgba(250, 40, 40, 0.5);
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #2b2b33;
+            border-radius: 2px;
+        }
+
+        /* Color Picker Reset */
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0; 
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
+
+        .cyber-border {
+            position: relative;
+        }
+        .cyber-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, transparent 50%, #fa2828 50%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Scrollbar for results */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e1e24; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2b2b33; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #fa2828; 
+        }
+
+        /* Canvas container shadow */
+        .canvas-container {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-gx-accent selection:text-white overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="w-full p-6 border-b border-white/10 bg-gx-dark/80 backdrop-blur-md sticky top-0 z-20">
+        <div class="max-w-6xl mx-auto flex items-center justify-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-gx-accent text-2xl"></i>
+                <h1 class="font-display font-bold text-2xl tracking-wider text-white">SPEED DIAL <span class="text-gx-accent">GEN</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-8">
+        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+            
+            <!-- Controls Section -->
+            <div class="space-y-6 animate-fade-in-up">
+                
+                <!-- Search & Source Panel -->
+                <div class="bg-gx-panel p-6 rounded-lg border border-white/5 cyber-border relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-gx-accent"></div>
+                    
+                    <h2 class="font-display text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-search text-gx-secondary"></i> Find Logo
+                    </h2>
+
+                    <!-- Search Input -->
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Search App or Website</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="searchInput" placeholder="e.g. Discord, Steam, Reddit" 
+                                class="flex-1 bg-gx-input border border-transparent focus:border-gx-accent outline-none text-white px-4 py-2 rounded transition-all placeholder-gray-600">
+                            <button id="searchBtn" class="bg-gx-accent hover:bg-gx-accentHover text-white font-bold px-6 py-2 rounded transition-all shadow-[0_0_15px_rgba(250,40,40,0.3)] hover:shadow-[0_0_25px_rgba(250,40,40,0.5)]">
+                                SEARCH
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-info-circle mr-1"></i> Searches clearbit (logos) & iTunes (icons).</p>
+                    </div>
+
+                    <!-- Search Results Grid -->
+                    <div id="resultsContainer" class="hidden mb-4">
+                        <label class="block text-xs font-bold text-gx-secondary uppercase mb-2 tracking-wider flex justify-between">
+                            <span>Select an Image</span>
+                            <span id="resultsCount" class="text-gray-500"></span>
+                        </label>
+                        <div id="resultsGrid" class="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto custom-scrollbar p-1">
+                            <!-- Results injected here -->
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 my-4">
+                        <div class="h-px bg-white/10 flex-1"></div>
+                        <span class="text-xs text-gray-500 font-bold">OR UPLOAD</span>
+                        <div class="h-px bg-white/10 flex-1"></div>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div>
+                        <input type="file" id="fileInput" accept="image/*" 
+                            class="block w-full text-sm text-gray-400
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-gx-input file:text-gx-secondary
+                            hover:file:bg-white/10 cursor-pointer transition-all">
+                    </div>
+                </div>
+
+                <!-- Customization Panel -->
+                <div class="bg-gx-panel p-6 rounded-lg border border-white/5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-gx-secondary"></div>
+                    
+                    <h2 class="font-display text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-gx-secondary"></i> Customization
+                    </h2>
+
+                    <!-- Background Color -->
+                    <div class="mb-5">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Background Color</label>
+                        <div class="flex gap-3 items-center bg-gx-input p-2 rounded border border-transparent focus-within:border-white/20 transition-all">
+                            <input type="color" id="bgColor" value="#1e1e24" class="w-10 h-10 cursor-pointer rounded">
+                            <input type="text" id="bgColorText" value="#1e1e24" class="bg-transparent text-white font-mono outline-none w-full uppercase">
+                        </div>
+                    </div>
+
+                    <!-- Icon Tint -->
+                    <div class="mb-5">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Icon Tint (Overlay)</label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="tintCheckbox" class="sr-only peer">
+                                <div class="relative w-9 h-5 bg-gx-input peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-gx-accent"></div>
+                            </label>
+                        </div>
+                        <div id="tintControls" class="flex gap-3 items-center bg-gx-input p-2 rounded border border-transparent focus-within:border-white/20 transition-all opacity-50 pointer-events-none grayscale">
+                            <input type="color" id="tintColor" value="#ffffff" class="w-10 h-10 cursor-pointer rounded">
+                            <input type="text" id="tintColorText" value="#ffffff" class="bg-transparent text-white font-mono outline-none w-full uppercase">
+                        </div>
+                    </div>
+
+                    <!-- Scale Slider -->
+                    <div class="mb-5">
+                        <div class="flex justify-between mb-2">
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Logo Scale</label>
+                            <span id="scaleValue" class="text-xs font-mono text-gx-secondary">100%</span>
+                        </div>
+                        <input type="range" id="scaleRange" min="10" max="200" value="100" class="w-full">
+                    </div>
+
+                    <!-- Offset Y Slider -->
+                    <div class="mb-2">
+                        <div class="flex justify-between mb-2">
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Vertical Position</label>
+                            <span id="offsetValue" class="text-xs font-mono text-gx-secondary">0px</span>
+                        </div>
+                        <input type="range" id="offsetRange" min="-180" max="180" value="0" class="w-full">
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button id="resetBtn" class="mt-4 text-xs text-gray-500 hover:text-white underline transition-colors">
+                        Reset Position & Scale
+                    </button>
+                </div>
+
+                <!-- Download Button -->
+                <button id="downloadBtn" class="w-full bg-white text-black font-display font-bold text-xl py-4 rounded hover:bg-gray-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> DOWNLOAD PNG
+                </button>
+                 <p id="errorMsg" class="text-red-500 text-xs mt-2 hidden text-center font-mono"></p>
+
+            </div>
+
+            <!-- Preview Section -->
+            <div class="flex flex-col items-center justify-center relative">
+                <div class="mb-4 flex items-center gap-2 text-gray-400">
+                    <i class="fa-solid fa-eye"></i>
+                    <span class="text-xs font-bold tracking-widest uppercase">Live Preview (440 x 360)</span>
+                </div>
+                
+                <!-- The Canvas -->
+                <div class="canvas-container rounded-lg overflow-hidden border-2 border-white/10 relative bg-gx-dark">
+                    <!-- Loading Overlay -->
+                    <div id="loadingOverlay" class="absolute inset-0 bg-gx-dark/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center hidden">
+                        <div class="w-8 h-8 border-4 border-gx-accent border-t-transparent rounded-full animate-spin mb-2"></div>
+                        <span class="text-xs font-bold text-gx-accent animate-pulse">LOADING...</span>
+                    </div>
+                    
+                    <canvas id="canvas" width="440" height="360" class="block max-w-full h-auto"></canvas>
+                </div>
+
+                <!-- Tips -->
+                <div class="mt-6 text-center max-w-md">
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Tip: <strong>Transparent Logos</strong> usually look best with custom background colors. <strong>App Icons</strong> (squares) look good on dark backgrounds.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 text-center text-gray-600 text-xs font-mono border-t border-white/5 bg-gx-dark">
+        &copy; 2024 SPEED DIAL GEN // OPERA GX FAN TOOL
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // Global callback for iTunes JSONP
+        window.handleItunesResults = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // UI Elements
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsGrid = document.getElementById('resultsGrid');
+            const fileInput = document.getElementById('fileInput');
+            const bgColorInput = document.getElementById('bgColor');
+            const bgColorText = document.getElementById('bgColorText');
+            
+            // Tint Controls
+            const tintCheckbox = document.getElementById('tintCheckbox');
+            const tintControls = document.getElementById('tintControls');
+            const tintColorInput = document.getElementById('tintColor');
+            const tintColorText = document.getElementById('tintColorText');
+
+            // Sliders
+            const scaleRange = document.getElementById('scaleRange');
+            const scaleValue = document.getElementById('scaleValue');
+            const offsetRange = document.getElementById('offsetRange');
+            const offsetValue = document.getElementById('offsetValue');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const errorMsg = document.getElementById('errorMsg');
+
+            // State
+            let state = {
+                image: null,
+                bgColor: '#1e1e24',
+                tintEnabled: false,
+                tintColor: '#ffffff',
+                scale: 100, // 10 to 200
+                offsetY: 0,
+                isTainted: false 
+            };
+
+            // Initial Draw
+            draw();
+
+            // --- Search Logic ---
+
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performSearch();
+            });
+
+            async function performSearch() {
+                const query = searchInput.value.trim();
+                if (!query) return;
+
+                searchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                resultsContainer.classList.remove('hidden');
+                resultsGrid.innerHTML = '<div class="col-span-4 text-center text-xs text-gray-500 py-4">Searching...</div>';
+
+                const candidates = [];
+
+                // 1. Search Clearbit (Transparent Logos)
+                try {
+                    const cbRes = await fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${encodeURIComponent(query)}`);
+                    if (cbRes.ok) {
+                        const cbData = await cbRes.json();
+                        cbData.forEach(item => {
+                            if (item.logo) {
+                                candidates.push({
+                                    url: item.logo + '?size=512', // Request higher res
+                                    type: 'logo',
+                                    title: item.name
+                                });
+                            }
+                        });
+                    }
+                } catch (e) { console.log('Clearbit error', e); }
+
+                // 2. Search iTunes (App Icons - High Res)
+                // Using JSONP to bypass CORS completely
+                const itunesPromise = new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    const callbackName = 'itunes_' + Date.now();
+                    
+                    window[callbackName] = (data) => {
+                        const results = (data.results || []).map(item => ({
+                            url: item.artworkUrl512 || item.artworkUrl100,
+                            type: 'app',
+                            title: item.trackName
+                        }));
+                        delete window[callbackName];
+                        document.body.removeChild(script);
+                        resolve(results);
+                    };
+
+                    script.src = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=software&limit=6&callback=${callbackName}`;
+                    script.onerror = () => resolve([]);
+                    document.body.appendChild(script);
+                });
+
+                const itunesResults = await itunesPromise;
+                candidates.push(...itunesResults);
+
+                // 3. Render Results
+                searchBtn.textContent = 'SEARCH';
+                renderResults(candidates);
+            }
+
+            function renderResults(candidates) {
+                resultsGrid.innerHTML = '';
+                if (candidates.length === 0) {
+                    resultsGrid.innerHTML = '<div class="col-span-4 text-center text-xs text-gray-500 py-4">No results found. Try uploading.</div>';
+                    return;
+                }
+
+                candidates.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = "aspect-square bg-gx-input rounded border border-white/5 hover:border-gx-accent cursor-pointer overflow-hidden relative group transition-all";
+                    
+                    const img = document.createElement('img');
+                    img.src = item.url;
+                    img.className = "w-full h-full object-contain p-2";
+                    img.crossOrigin = "Anonymous"; // Try anonymous first
+                    
+                    // Label overlay (App vs Logo)
+                    const badge = document.createElement('div');
+                    badge.className = `absolute bottom-0 right-0 text-[9px] font-bold px-1.5 py-0.5 text-black ${item.type === 'logo' ? 'bg-gx-secondary' : 'bg-white'}`;
+                    badge.innerText = item.type === 'logo' ? 'LOGO' : 'APP';
+
+                    div.appendChild(img);
+                    div.appendChild(badge);
+
+                    div.onclick = () => loadMainImage(item.url);
+                    resultsGrid.appendChild(div);
+                });
+            }
+
+            function loadMainImage(url) {
+                loadingOverlay.classList.remove('hidden');
+                
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                
+                img.onload = () => {
+                    state.image = img;
+                    state.isTainted = false;
+                    loadingOverlay.classList.add('hidden');
+                    draw();
+                };
+
+                img.onerror = () => {
+                    loadingOverlay.classList.add('hidden');
+                    alert("Could not load this specific image due to security restrictions. Try another result or save/upload it.");
+                };
+
+                img.src = url;
+            }
+
+            // --- Drawing Logic ---
+
+            function draw() {
+                // Clear
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background
+                ctx.fillStyle = state.bgColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Image
+                if (state.image) {
+                    const img = state.image;
+                    
+                    // Calculate base fit
+                    const maxWidth = canvas.width * 0.8;
+                    const maxHeight = canvas.height * 0.8;
+                    
+                    let drawWidth = img.width;
+                    let drawHeight = img.height;
+
+                    // Normalize huge images
+                    if (drawWidth > maxWidth || drawHeight > maxHeight) {
+                        const ratio = Math.min(maxWidth / drawWidth, maxHeight / drawHeight);
+                        drawWidth *= ratio;
+                        drawHeight *= ratio;
+                    } 
+                    
+                    // Normalize tiny images
+                    if (drawWidth < 64) {
+                        const ratio = 64 / drawWidth;
+                        drawWidth *= ratio;
+                        drawHeight *= ratio;
+                    }
+
+                    // Apply User Scale
+                    const scaleMultiplier = state.scale / 50 * 1.0; 
+                    
+                    const finalWidth = drawWidth * scaleMultiplier;
+                    const finalHeight = drawHeight * scaleMultiplier;
+
+                    const x = (canvas.width - finalWidth) / 2;
+                    const y = ((canvas.height - finalHeight) / 2) + parseInt(state.offsetY);
+
+                    // Draw
+                    try {
+                        if (state.tintEnabled) {
+                            // Tinting Logic
+                            const offCanvas = document.createElement('canvas');
+                            offCanvas.width = Math.ceil(finalWidth);
+                            offCanvas.height = Math.ceil(finalHeight);
+                            const offCtx = offCanvas.getContext('2d');
+
+                            offCtx.drawImage(img, 0, 0, finalWidth, finalHeight);
+                            offCtx.globalCompositeOperation = 'source-in';
+                            offCtx.fillStyle = state.tintColor;
+                            offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+
+                            ctx.drawImage(offCanvas, x, y);
+                        } else {
+                            ctx.drawImage(img, x, y, finalWidth, finalHeight);
+                        }
+                        errorMsg.classList.add('hidden');
+                    } catch (e) {
+                        console.error("Draw error", e);
+                    }
+                } else {
+                    // Placeholder Text
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                    ctx.font = 'bold 30px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('NO LOGO', canvas.width / 2, canvas.height / 2);
+                }
+            }
+
+            // --- Event Listeners (Controls) ---
+
+            // Color
+            function updateColor(color) {
+                state.bgColor = color;
+                bgColorInput.value = color;
+                bgColorText.value = color;
+                draw();
+            }
+            bgColorInput.addEventListener('input', (e) => updateColor(e.target.value));
+            bgColorText.addEventListener('input', (e) => {
+                let val = e.target.value;
+                if (!val.startsWith('#')) val = '#' + val;
+                if (/^#[0-9A-F]{6}$/i.test(val)) updateColor(val);
+            });
+
+            // Tint
+            tintCheckbox.addEventListener('change', (e) => {
+                state.tintEnabled = e.target.checked;
+                state.tintEnabled ? tintControls.classList.remove('opacity-50', 'pointer-events-none', 'grayscale') : tintControls.classList.add('opacity-50', 'pointer-events-none', 'grayscale');
+                draw();
+            });
+            function updateTintColor(color) {
+                state.tintColor = color;
+                tintColorInput.value = color;
+                tintColorText.value = color;
+                draw();
+            }
+            tintColorInput.addEventListener('input', (e) => updateTintColor(e.target.value));
+            tintColorText.addEventListener('input', (e) => {
+                let val = e.target.value;
+                if (!val.startsWith('#')) val = '#' + val;
+                if (/^#[0-9A-F]{6}$/i.test(val)) updateTintColor(val);
+            });
+
+            // Sliders
+            scaleRange.addEventListener('input', (e) => {
+                state.scale = parseInt(e.target.value);
+                scaleValue.textContent = state.scale + '%';
+                draw();
+            });
+            offsetRange.addEventListener('input', (e) => {
+                state.offsetY = parseInt(e.target.value);
+                offsetValue.textContent = state.offsetY + 'px';
+                draw();
+            });
+            resetBtn.addEventListener('click', () => {
+                state.scale = 100;
+                state.offsetY = 0;
+                scaleRange.value = 100;
+                offsetRange.value = 0;
+                scaleValue.textContent = '100%';
+                offsetValue.textContent = '0px';
+                draw();
+            });
+
+            // File Upload
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        state.image = img;
+                        state.isTainted = false;
+                        draw();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+                searchInput.value = '';
+            });
+
+            // Download
+            downloadBtn.addEventListener('click', () => {
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = 'speed-dial-icon.png';
+                    link.href = dataUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (e) {
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.innerText = "Error: Security blocked download. Right Click image > Save As instead.";
+                }
+            });
+            
+            // Initial UI Sync
+            bgColorText.value = state.bgColor;
+        });
+    </script>
+</body>
+</html>

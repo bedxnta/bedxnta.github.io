@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cosmo - Site</title>
-    <meta content="Cosmo - Site" property="og:title" />
-    <meta content="My personal landing page" property="og:description" />
-    <link rel="icon" type="image/x-icon" href="static/favicon.png" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://kit.fontawesome.com/04c5cc98c2.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div class="window">
-      <div class="window-header">
-        <div class="window-time" id="clock">🕒 00:00:00 (Asia/Kolkata)</div>
-        <div class="window-controls">
-          <span class="control-button control-minimize"></span>
-          <span class="control-button control-maximize"></span>
-          <span class="control-button control-close"></span>
-        </div>
-      </div>
-      <div class="window-body">
-        <pre class="terminal-content">
-<span class="terminal-ascii">___.              .___                  __           .__  .__                  
-\_ |__   ____   __| _/____    ____     |__| ____     |  | |__|__  __ ____      <span class="ascii-cat"> ╱|、</span>
- | __ \_/ __ \ / __ |\__  \  /    \    |  |/  _ \    |  | |  \  \/ // __ \     <span class="ascii-cat">(˚ˎ 。7</span>
- | \_\ \  ___// /_/ | / __ \|   |  \   |  (  <_> )   |  |_|  |\   /\  ___/     <span class="ascii-cat"> |、˜ 〵</span>
- |___  /\___  >____ |(____  /___|  /\__|  |\____/ /\ |____/__| \_/  \___  >    <span class="ascii-cat"> じしˍ, )ノ</span>
-     \/     \/     \/     \/     \/\______|       \/                    \/      
-</span>
+<head>
+  <meta charset="UTF-8">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Font: Fira Code for a clean code aesthetic -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <h1>&lt;Bedanta D /&gt;</h1>
+      <p class="tagline">19 y/o, Electrical Engineering Student</p>
+    </header>
 
-<span style="color:#9399b2;">root@cosmo</span> :~<span style="color:#9399b2;">$</span> <span style="color:#a6e3a1;">cat</span> about_me.txt  
-<img src="static/josuke8.png" class="about-image" alt="About Me Image">
-Hi! I am <b style="color:#fab387;">Cosmo</b> (aka <b style="color:#f38ba8;">Bedanta</b>) and I am a <span style="color:#89b4fa;">19 year old</span> student! <span class="smolcat">ᓚᘏᗢ</span>
-I like to <span style="color:#94e2d5;">read books</span>, <span style="color:#94e2d5;">play video games</span> and <span style="color:#94e2d5;">listen to music</span>. I also like to do <span style="color:#f9e2af;">programming</span> and watch <span style="color:#f9e2af;">anime</span>, <span style="color:#f9e2af;">TV shows</span> and <span style="color:#f9e2af;">movies</span>.
-In terms of programming, I have knowledge of <span style="color:#a6e3a1;">Python</span>, <span style="color:#a6e3a1;">HTML</span>, <span style="color:#a6e3a1;">CSS</span> and <span style="color:#a6e3a1;">JS</span>. I am currently learning <span style="color:#fab387;">C</span>. Speaking of languages, I can speak <span style="color:#cba6f7;">English</span>, <span style="color:#cba6f7;">Bengali</span>, <span style="color:#cba6f7;">Hindi</span>, and conversational <span style="color:#cba6f7;">German</span>.  
+    <nav>
+      <a href="#about">about</a> 〣 
+      <a href="#projects">projects</a> 〣
+      <a href="#applets">applets</a> 〣 
+      <a href="#contact">contact</a>
+    </nav>
 
-This website is just a landing page for my stuff. More detailed pages will probably be added soon. Eh, don't count on it, tbh.
+    <main>
+      <section id="about">
+        <h2>// about</h2>
+        <p>
+          Hi, I'm <b>Bedanta</b>.
+          I also go by "Cosmo" online. <br>
+          I enjoy reading, gaming, music and I also code in my free time. I also enjoy taking pictures of nature whenever I go out.
+          This is my little digital corner.
+        </p>
+      </section>
 
-<span style="color:#9399b2;">root@cosmo</span> :~<span style="color:#9399b2;">$</span> <span style="color:#a6e3a1;">./</span><span style="color:#f9e2af;">socials.sh</span>
-Do you want to contact me or just see what I'm up to?
-You can find all my socials below! <span class="smolcat">ᓚᘏᗢ</span>
+      <section id="projects">
+        <h2>// projects</h2>
+        <ul>
+          <li><span class="code">[AK]</span> <a href="https://amzn.in/d/9q4IxJj">Alimo, Are You Okay? - My Book</a></li>
+          <li><span class="code">[DB]</span> <a href="https://github.com/bedxnta/d4c">D4C - Discord User App</a></li>
+          <li><span class="code">[S1]</span> <a href="https://github.com/bedxnta/sicher">Sicher - Message Encryptor</a></li>
+        </ul>
+      </section>
 
-<i class="fa-brands fa-discord" style="color:#7289da;"></i> <a href="#" onclick="copyDiscordTag(); return false;" class="social-link" style="color:#7289da; text-decoration: underline;">Discord</a> -=- <i class="fa-brands fa-github" style="color:#cba6f7;"></i> <a href="https://github.com/bedxnta" target="_blank" class="social-link" style="color:#cba6f7; text-decoration: underline;">GitHub</a> -=- <i class="fa-brands fa-instagram" style="color:#f38ba8;"></i> <a href="https://www.instagram.com/cosmeowcha" target="_blank" class="social-link" style="color:#f38ba8; text-decoration: underline;">Instagram</a> -=- <i class="fab fa-spotify" style="color:#94e2d5;"></i> <a href="https://open.spotify.com/user/31eriwjxqidtdks44z6d363bfw3m" target="_blank" class="social-link" style="color:#94e2d5; text-decoration: underline;">Spotify</a> -=- <i class="fa-brands fa-youtube" style="color:#f87171;"></i> <a href="https://youtube.com/@uhCosmo" target="_blank" class="social-link" style="color:#f87171; text-decoration: underline;">YouTube</a> -=- <i class="fa-brands fa-x-twitter" style="color:#a6adc8;"></i> <a href="https://x.com/bedxnta" target="_blank" class="social-link" style="color:#a6adc8; text-decoration: underline;">X</a> -=- <i class="fa-brands fa-steam" style="color:#b4befe;"></i> <a href="https://steamcommunity.com/id/cosmeowx" target="_blank" class="social-link" style="color:#b4befe; text-decoration: underline;">Steam</a>
+      <section id="applets">
+        <h2>// applets</h2>
+        <p>Applets are small tools I made to make things easier!</p>
+        <ul>
+          <li><span class="code">[🎮]</span> <a href="ccps/">CCPS - A Controller CPS Tester</a></li>
+          <li><span class="code">[🏃]</span> <a href="spdialgen/">Speed Dial Gen - A Thumbnail Generator for Opera's Speed Dial</a></li>
+        </ul>
+      </section>
 
-<span style="color:#9399b2;">root@cosmo</span> :~<span style="color:#9399b2;">$</span> <span style="color:#a6e3a1;">support</span> <span style="color:#f9e2af;">--list-methods</span>
-Wanna buy me a coffee? You can use the following addresses to do so. I'll be grateful for all donations <span class="smolcat">ᓚᘏᗢ ❤</span>  
+      <section id="contact">
+        <h2>// contact</h2>
+        <p>Email → <a href="mailto:atgc@duck.com">atgc@duck.com</a></p>
+        <p>GitHub → <a href="https://github.com/bedxnta">github.com/bedxnta</a></p>
+        <p>Discord → <span style="color:#00ffc8">@bedanjo</span></p>
+        <p>Instagram → <a href="https://instagram.com/cosmeowcha">@cosmeowcha</a></p>
+      </section>
+    </main>
 
-<i class="fa-solid fa-indian-rupee-sign" style="color:#fab387;"></i> <a href="#" class="social-link" style="color:#fab387; text-decoration: underline;" onclick="copyToClipboard('owo@slc', 'UPI address'); return false;">UPI</a> -=- <i class="fa-brands fa-paypal" style="color: #fab387;"></i> <a href="https://paypal.me/bedxnta" target="_blank" class="social-link" style="color:#fab387; text-decoration: underline;">PayPal</a> -=- <i class="fa-solid fa-litecoin-sign" style="color:#fab387;"></i> <a href="#" class="social-link" style="color:#fab387; text-decoration: underline;" onclick="copyToClipboard('ltc1q8sws2ay3w7q2rtlsec5x83qkskkmmtcsx3pqax', 'Litecoin address'); return false;">Litecoin</a> <span class="cursor"></span>
-        </pre>
-      </div>
-    </div>
-  </body>
+    <footer>
+      <p>© 2025 Bedanta D</p>
+    </footer>
+  </div>
+</body>
 </html>
