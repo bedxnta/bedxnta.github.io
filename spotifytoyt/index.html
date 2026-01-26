@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>music search hub</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #eee;
+      padding: 40px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h2 {
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background: #1f1f1f;
+      color: #eee;
+    }
+
+    button:hover {
+      background: #2a2a2a;
+    }
+  </style>
+</head>
+<body>
+
+<h2>search music everywhere</h2>
+<p>song, artist, album — anything.</p>
+
+<input
+  id="query"
+  placeholder="eg: slow dancing in the dark joji"
+/>
+
+<div class="buttons">
+  <button onclick="openSpotify()">spotify</button>
+  <button onclick="openYouTube()">youtube</button>
+  <button onclick="openYouTubeMusic()">youtube music</button>
+  <button onclick="openAppleMusic()">apple music</button>
+</div>
+
+<script>
+function getQuery() {
+  const q = document.getElementById("query").value.trim();
+  if (!q) {
+    alert("type something first");
+    throw new Error("empty query");
+  }
+  return encodeURIComponent(q);
+}
+
+function openSpotify() {
+  window.open(`https://open.spotify.com/search/${getQuery()}`, "_blank");
+}
+
+function openYouTube() {
+  window.open(`https://www.youtube.com/results?search_query=${getQuery()}`, "_blank");
+}
+
+function openYouTubeMusic() {
+  window.open(`https://music.youtube.com/search?q=${getQuery()}`, "_blank");
+}
+
+function openAppleMusic() {
+  const q = document.getElementById("query").value.trim();
+  if (!q) {
+    alert("type something first");
+    return;
+  }
+  const appleQuery = q.replace(/\s+/g, "%20");
+  window.open(`https://music.apple.com/search?term=${appleQuery}`, "_blank");
+}
+
+
+</script>
+
+</body>
+</html>
