@@ -1,67 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Google Font: Fira Code for a clean code aesthetic -->
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bd // me</title>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="frame">
-    <header>
-      <h1>&lt;Bedanta D /&gt;</h1>
-      <p class="tagline">19 y/o, Electrical Engineering Student</p>
-    </header>
 
-    <nav>
-      <a href="#about">about</a> 〣 
-      <a href="#projects">projects</a> 〣
-      <a href="#applets">applets</a> 〣 
-      <a href="#contact">contact</a>
-    </nav>
+    <!-- Main Website -->
+    <main class="container">
 
-    <main>
-      <section id="about">
-        <h2>// about</h2>
-        <p>
-          Hi, I'm <b>Bedanta</b>.
-          I also go by "Cosmo" online. <br>
-          I enjoy reading, gaming, music and I also code in my free time. I also enjoy taking pictures of nature whenever I go out.
-          This is my little digital corner.
-        </p>
-      </section>
+        <!-- Hero Window -->
+        <section class="window hero">
 
-      <section id="projects">
-        <h2>// projects</h2>
-        <ul>
-          <li><span class="code">[AK]</span> <a href="https://amzn.in/d/9q4IxJj">Alimo, Are You Okay? - My Book</a></li>
-          <li><span class="code">[DB]</span> <a href="https://github.com/bedxnta/d4c">D4C - Discord User App</a></li>
-          <li><span class="code">[S1]</span> <a href="https://github.com/bedxnta/sicher">Sicher - Message Encryptor</a></li>
-        </ul>
-      </section>
+            <div class="window-top">
+                <span>me.sh</span>
+                <div class="buttons">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
 
-      <section id="applets">
-        <h2>// applets</h2>
-        <p>Applets are small tools I made to make things easier!</p>
-        <ul>
-          <li><span class="code">[🎮]</span> <a href="ccps/">CCPS - A Controller CPS Tester</a></li>
-          <li><span class="code">[🏃]</span> <a href="spdialgen/">Speed Dial Gen - A Thumbnail Generator for Opera's Speed Dial</a></li>
-        </ul>
-      </section>
+            <div class="window-content">
 
-      <section id="contact">
-        <h2>// contact</h2>
-        <p>Email → <a href="mailto:atgc@duck.com">atgc@duck.com</a></p>
-        <p>GitHub → <a href="https://github.com/bedxnta">github.com/bedxnta</a></p>
-        <p>Discord → <span style="color:#00ffc8">@bedanjo</span></p>
-        <p>Instagram → <a href="https://instagram.com/cosmeowcha">@cosmeowcha</a></p>
-      </section>
+                <div class="profile">
+                    <img src="media/avatar.png"
+                         alt="Avatar">
+                </div>
+
+                <div class="hero-text">
+                    <h1>Bedanta D</h1>
+
+                    <p id="changing-text">
+                        Electrical Engineering Student
+                    </p>
+
+                    <div class="hero-links">
+                        <a href="#about">about</a>
+                        <a href="#projects">projects</a>
+                        <a href="#applets">applets</a>
+                        <a href="#contact">contact</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Floating Music Widget -->
+        <div class="music-float" aria-label="Music controls">
+            <button id="toggle-music-btn" class="music-float-button" aria-expanded="false" aria-controls="music-controls">
+                <img class="music-icon" src="https://ccvaults.com/assets/80.%20Particles/note.png" alt="Music">
+            </button>
+            <div class="music-controls" id="music-controls" style="display: none;" aria-hidden="true">
+                <div class="music-info">Alpha - C418</div>
+                <input type="range" id="seekbar" min="0" max="100" value="0" class="seekbar" aria-label="Seek position">
+                <div class="controls-row">
+                    <button id="music-btn" class="play-btn">Play</button>
+                    <div class="volume-control">
+                        <span>🔊</span>
+                        <input type="range" id="volume" min="0" max="100" value="70" class="volume-slider" aria-label="Volume control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About -->
+        <section id="about" class="window">
+
+            <div class="window-top">
+                <span>about.txt</span>
+            </div>
+
+            <div class="window-content about">
+                <p>
+                    Hi, I'm Bedanta. I also go by "Cosmo" online. I am 20 years old.
+                </p>
+
+                <p>
+                    I enjoy reading, gaming, music and I also code in my free time. I also enjoy taking pictures of nature whenever I go out. This is my little digital corner.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="window">
+
+            <div class="window-top">
+                <span>projects/</span>
+            </div>
+
+            <div class="window-content section-grid">
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/31.%20Spawn%20Eggs/cat_spawn_egg.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">Alimo, Are You Okay? - My Book</span>
+                        <p class="card-meta">My writing project about a cat, exploring mood and memory.</p>
+                    </div>
+                    <a class="card-link" href="https://amzn.in/d/9q4IxJj">Open</a>
+                </article>
+                
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/34.%20Uncategorized/Paper.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">PDF2Img - Discord PDF Viewer</span>
+                        <p class="card-meta">Not that kind of a "pdf". This bot allows viewing of .pdf files directly in chat.</p>
+                    </div>
+                    <a class="card-link" href="https://github.com/bedxnta/pdf2img-discord-bot">Open</a>
+                </article>
+
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/20.%20Compass/Clock.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">EasyCounter - Counter App for Android</span>
+                        <p class="card-meta">It's just a simple counter app with logging and stepping features.</p>
+                    </div>
+                    <a class="card-link" href="https://github.com/bedxnta/easycounter-android">Open</a>
+                </article>
+
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/11.%20Materials/Iron_Ingot.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">D4C - Discord User App</span>
+                        <p class="card-meta">A custom user bot for easy utilities on Discord.</p>
+                    </div>
+                    <a class="card-link" href="https://github.com/bedxnta/d4c">Open</a>
+                </article>
+
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/20.%20Blocks/39.%20Admin/Barrier.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">DiscordSB - Discord Self Bot</span>
+                        <p class="card-meta">Unsafe version of an user app, runs from your account.</p>
+                    </div>
+                    <a class="card-link" href="https://github.com/bedxnta/discordsb">Open</a>
+                </article>
+                
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/35.%20Happy%20Ghast/blue_harness.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">Sicher - Message Encryptor</span>
+                        <p class="card-meta">A privacy-focused message encryptor.</p>
+                    </div>
+                    <a class="card-link" href="https://github.com/bedxnta/sicher">Open</a>
+                </article>
+            </div>
+
+        </section>
+
+        <!-- Applets -->
+        <section id="applets" class="window">
+
+            <div class="window-top">
+                <span>applets/</span>
+            </div>
+
+            <div class="window-content section-grid">
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/21.%20Decoration/Amethyst_Cluster.png" alt="Applet icon">
+                    <div class="card-copy">
+                        <span class="card-title">CCPS - Controller CPS Tester</span>
+                        <p class="card-meta">A small tool to test click speed for controllers.</p>
+                    </div>
+                    <a class="card-link" href="https://bedxnta.github.io/ccps/" target="_blank">Open</a>
+                </article>
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/22.%20Coral/Fire_Coral.png" alt="Applet icon">
+                    <div class="card-copy">
+                        <span class="card-title">Speed Dial Gen</span>
+                        <p class="card-meta">Thumbnail generator for Opera GX speed dials.</p>
+                    </div>
+                    <a class="card-link" href="https://bedxnta.github.io/spdialgen/" target="_blank">Open</a>
+                </article>
+            </div>
+
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="window">
+
+            <div class="window-top">
+                <span>contact/</span>
+            </div>
+
+            <div class="window-content section-grid">
+                <article class="card contact-card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/23.%20Flowers/Dandelion.png" alt="Contact icon">
+                    <div class="card-copy">
+                        <span class="card-title">Email</span>
+                        <p class="card-meta"><a href="mailto:atgc@duck.com">atgc@duck.com</a></p>
+                    </div>
+                </article>
+
+                <article class="card contact-card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/34.%20Uncategorized/open_eyeblossom.png" alt="Contact icon">
+                    <div class="card-copy">
+                        <span class="card-title">GitHub</span>
+                        <p class="card-meta"><a href="https://github.com/bedxnta" target="_blank">github.com/bedxnta</a></p>
+                    </div>
+                </article>
+
+                <article class="card contact-card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/23.%20Flowers/Cornflower.png" alt="Contact icon">
+                    <div class="card-copy">
+                        <span class="card-title">Discord</span>
+                        <p class="card-meta">@bedanjo</p>
+                    </div>
+                </article>
+
+                <article class="card contact-card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/80.%20Particles/big_smoke_1.png" alt="Contact icon">
+                    <div class="card-copy">
+                        <span class="card-title">Steam</span>
+                        <p class="card-meta"><a href="https://steamcommunity.com/id/cosmeowx" target="_blank">Cosmo</a></p>
+                    </div>
+                </article>
+
+                <article class="card contact-card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/23.%20Flowers/Pink_Petals.png" alt="Contact icon">
+                    <div class="card-copy">
+                        <span class="card-title">Instagram</span>
+                        <p class="card-meta"><a href="https://instagram.com/cosmeowx" target="_blank">@cosmeowx</a></p>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
     </main>
 
-    <footer>
-      <p>© 2025 Bedanta D</p>
-    </footer>
-  </div>
+    <!-- Audio -->
+    <audio id="bg-music" src="media/alpha_c418.mp3" loop></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
