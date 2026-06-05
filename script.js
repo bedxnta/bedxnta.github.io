@@ -2,7 +2,7 @@ const changingText = document.getElementById("changing-text");
 
 const texts = [
     "Electrical Engineering Student",
-    "I used to use Arch btw",
+    "I use Arch btw",
     "Casual Programmer",
     "Really Good Video Gamer",
     "Building Weird Internet Things"
