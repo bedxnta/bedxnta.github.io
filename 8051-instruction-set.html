@@ -6,16 +6,16 @@
 <title>8051 Instruction Set Reference</title>
 <style>
   :root{
-    --bg:#000000;
-    --panel:#151b23;
-    --panel2:#1b2330;
-    --border:#2a3441;
-    --text:#dbe2ea;
-    --muted:#8b98a8;
-    --amber:#e8a33d;
-    --cyan:#4fc3d9;
-    --green:#6fcf97;
-    --red:#e6696f;
+    --bg:#101214;
+    --panel:#17191c;
+    --panel2:#1d2024;
+    --border:#30343a;
+    --text:#d6d8db;
+    --muted:#8b9097;
+    --amber:#d6a85c;
+    --cyan:#70a9b8;
+    --green:#86a978;
+    --red:#b86b70;
     --mono:Consolas,'SFMono-Regular','Courier New',monospace;
   }
   *{box-sizing:border-box;}
@@ -294,18 +294,59 @@
     font-size:14.5px;
     margin:0;
     color:var(--amber);
+    flex-shrink:0;
+    white-space:nowrap;
   }
+  .topbar-search{
+    flex:1;
+    min-width:0;
+  }
+  .topbar-search input{
+    width:100%;
+    padding:8px 10px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-size:13px;
+    outline:none;
+  }
+  .topbar-search input:focus{border-color:var(--cyan);}
+  .topbar-search{position:relative;}
+  .search-suggestions{
+    position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:100;
+    background:var(--panel); border:1px solid var(--border); border-radius:7px;
+    box-shadow:0 8px 20px rgba(0,0,0,.45); overflow:hidden; display:none;
+  }
+  .search-suggestions.show{display:block;}
+  .search-suggestion{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    width:100%; padding:9px 11px; border:0; background:transparent;
+    color:var(--text); text-align:left; cursor:pointer; font-size:13px;
+  }
+  .search-suggestion:hover,.search-suggestion.active{background:var(--panel2);}
+  .search-suggestion .suggestion-name{
+    font-family:var(--mono); color:var(--amber); white-space:nowrap;
+  }
+  .search-suggestion .suggestion-desc{
+    color:var(--muted); font-size:11px; overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap;
+  }
+  .search-no-results{padding:10px 11px;color:var(--muted);font-size:12px;}
+
   .menu-btn{
     background:var(--panel2);
     border:1px solid var(--border);
     border-radius:6px;
     color:var(--text);
-    padding:7px 12px;
-    font-size:13px;
+    padding:7px 11px;
+    font-size:16px;
+    line-height:1;
     display:flex;
     align-items:center;
     gap:7px;
     cursor:pointer;
+    flex-shrink:0;
   }
   .menu-btn:active{background:var(--border);}
   .sidebar-overlay{
@@ -337,13 +378,224 @@
     .instr-summary{padding:14px 16px;}
     .instr-body{padding:16px 16px 20px;}
     .instr-card h2{font-size:19px;}
+    .search-box{display:none;}
   }
+  @media (max-width:400px){
+    .mobile-topbar h1{display:none;}
+  }
+  body{
+    background:
+      linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+      var(--bg);
+    background-size:100% 4px;
+  }
+
+  .app{max-width:1400px;margin:0 auto;}
+
+  .sidebar{background:#131517;border-right:1px solid var(--border);}
+
+  .sidebar-header h1{
+    font-family:var(--mono);
+    font-weight:600;
+    letter-spacing:0;
+  }
+
+  .sidebar-header p{
+    font-family:var(--mono);
+    font-size:10.5px;
+  }
+
+  .search-box input,
+  .topbar-search input{
+    background:#101214;
+    border-color:#35393e;
+    border-radius:3px;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.35);
+    font-family:var(--mono);
+  }
+
+  .search-box input:focus,
+  .topbar-search input:focus{
+    border-color:#667d84;
+    box-shadow:0 0 0 1px rgba(112,169,184,.12);
+  }
+
+  .nav-group-label{
+    font-family:var(--mono);
+    font-size:9.5px;
+    color:#70757c;
+  }
+
+  .nav-list li a{
+    border-left:1px solid transparent;
+    padding:4px 16px;
+    font-size:13px;
+  }
+
+  .nav-list li a:hover{
+    background:#1a1d20;
+    border-left-color:#65757a;
+  }
+
+  .nav-list li a.active{
+    background:#1b1e21;
+    border-left-color:var(--amber);
+  }
+
+  main{padding:34px 42px 90px;}
+
+  .page-title{
+    border-bottom:1px solid #25292e;
+    padding-bottom:20px;
+    margin-bottom:28px;
+  }
+
+  .page-title h1{
+    font-family:var(--mono);
+    font-size:24px;
+    font-weight:500;
+    letter-spacing:-.02em;
+  }
+
+  .page-title p{font-size:13px;max-width:850px;}
+
+  section.opcode-map,
+  .instr-card{
+    background:#151719;
+    border:1px solid var(--border);
+    border-radius:3px;
+    box-shadow:none;
+  }
+
+  section.opcode-map{padding:18px 20px 20px;}
+
+  section.opcode-map h2{
+    font-family:var(--mono);
+    font-size:15px;
+    font-weight:500;
+  }
+
+  .opcode-map table{font-size:11px;}
+
+  .opcode-map th,
+  .opcode-map td{border-color:#30343a;padding:5px;}
+
+  .opcode-map th,
+  .opcode-map td.rowhead{
+    background:#1b1e21;
+    color:#bda06c;
+  }
+
+  .opcode-map td.instr:hover{
+    background:#202429;
+    color:#91bdc8;
+  }
+
+  .instr-card{margin-bottom:8px;}
+
+  .instr-summary{padding:13px 18px;}
+
+  .instr-summary:hover{background:#1a1d20;}
+
+  .instr-card h2{
+    font-size:19px;
+    font-weight:500;
+    color:#d1ad67;
+  }
+
+  .instr-card h2 .fn{font-size:12px;}
+
+  .instr-body{padding:18px 20px 22px;}
+
+  .syntax{
+    background:#101214;
+    border-color:#30343a;
+    border-radius:3px;
+    color:#8eaf82;
+    font-size:13px;
+  }
+
+  table.opset{font-size:12.5px;}
+
+  table.opset th{
+    background:#1b1e21;
+    color:#bda06c;
+  }
+
+  table.opset th,
+  table.opset td{border-color:#30343a;}
+
+  .flag-badge{
+    background:#202328;
+    border-color:#353a40;
+    border-radius:2px;
+    color:#bda06c;
+  }
+
+  .desc{font-size:14px;color:#c9ccd0;}
+
+  .desc code{
+    background:#1b1e21;
+    border-color:#30343a;
+    border-radius:2px;
+  }
+
+  .see-also{border-top-color:#2b2f34;}
+
+  .search-suggestions{
+    background:#151719;
+    border-color:#3a3e43;
+    border-radius:3px;
+    box-shadow:0 10px 24px rgba(0,0,0,.5);
+  }
+
+  .search-suggestion{padding:8px 10px;}
+
+  .search-suggestion:hover,
+  .search-suggestion.active{background:#1e2226;}
+
+  .search-suggestion .suggestion-name{color:#d1ad67;}
+
+  .back-to-top{
+    width:38px;
+    height:38px;
+    border-radius:3px;
+    background:#25282c;
+    color:#c9b078;
+    border:1px solid #3a3e43;
+    box-shadow:none;
+  }
+
+  ::-webkit-scrollbar-thumb{
+    background:#34383d;
+    border-radius:2px;
+  }
+
+  @media (max-width:820px){
+    .mobile-topbar{
+      background:#131517;
+      border-bottom-color:#30343a;
+    }
+
+    .menu-btn{
+      background:#1b1e21;
+      border-radius:3px;
+      font-family:var(--mono);
+    }
+
+    main{padding:18px 14px 60px;}
+  }
+
 </style>
 </head>
 <body>
 <div class="mobile-topbar">
-  <h1>8051 Instruction Set</h1>
-  <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">&#9776; Menu</button>
+  <h1>8051</h1>
+  <div class="topbar-search">
+    <input type="text" id="searchInputTop" placeholder="Search instructions…" autocomplete="off">
+    <div class="search-suggestions" id="searchSuggestions"></div>
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
 </div>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -352,7 +604,7 @@
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <h1>8051 Instruction Set</h1>
-      <p>Quick reference &middot; source: aeb.win.tue.nl</p>
+      <p>MCS-51 reference</p>
     </div>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Filter instructions (e.g. MOV, ADD)…" autocomplete="off">
@@ -369,8 +621,7 @@
 
   <main>
     <div class="page-title">
-      <h1>8051 Instruction Set Reference</h1>
-      <p>Reformatted for fast lookup from <a href="https://aeb.win.tue.nl/comp/8051/set8051.html" target="_blank" rel="noopener">aeb.win.tue.nl/comp/8051/set8051.html</a>. All explanations are unchanged from the source — only navigation and layout have been reworked.</p>
+      <h1>8051 Instruction Set</h1>
     </div>
 
     <section class="opcode-map" id="opcode-map">
@@ -1407,26 +1658,133 @@ ADDC A,operand</div>
     li.appendChild(a);
     navList.appendChild(li);
   });
+const searchInput = document.getElementById('searchInput');
+const searchInputTop = document.getElementById('searchInputTop');
+const searchSuggestions = document.getElementById('searchSuggestions');
 
-  // Search filter
-  const searchInput = document.getElementById('searchInput');
-  const noResults = document.createElement('div');
-  noResults.className = 'no-results';
-  noResults.textContent = 'No matching instructions.';
-  noResults.style.display = 'none';
-  navList.after(noResults);
+const noResults = document.createElement('div');
+noResults.className = 'no-results';
+noResults.textContent = 'No matching instructions.';
+noResults.style.display = 'none';
+navList.after(noResults);
 
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
-    let visibleCount = 0;
-    navList.querySelectorAll('li').forEach(li => {
+function getMatches(q){
+  q = q.trim().toLowerCase();
+  if (!q) return [];
+
+  return Array.from(navList.querySelectorAll('li'))
+    .map(li => {
       const a = li.querySelector('a');
-      const match = !q || a.dataset.search.includes(q);
-      li.classList.toggle('nav-hidden', !match);
-      if (match) visibleCount++;
-    });
-    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      const name = a.querySelector('span:first-child')?.textContent || '';
+      const fn = a.querySelector('.fn')?.textContent || '';
+      return {
+        id: a.getAttribute('href').slice(1),
+        name, fn,
+        search: a.dataset.search || ''
+      };
+    })
+    .filter(item => item.search.includes(q));
+}
+
+function filterNav(q){
+  q = q.trim().toLowerCase();
+  let visibleCount = 0;
+
+  navList.querySelectorAll('li').forEach(li => {
+    const a = li.querySelector('a');
+    const match = !q || (a.dataset.search || '').includes(q);
+    li.classList.toggle('nav-hidden', !match);
+    if (match) visibleCount++;
   });
+
+  noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+function showSuggestions(value){
+  if (!searchSuggestions) return;
+
+  const q = value.trim();
+  searchSuggestions.innerHTML = '';
+
+  if (!q) {
+    searchSuggestions.classList.remove('show');
+    return;
+  }
+
+  const matches = getMatches(q);
+
+  if (!matches.length) {
+    const empty = document.createElement('div');
+    empty.className = 'search-no-results';
+    empty.textContent = 'No matching instructions.';
+    searchSuggestions.appendChild(empty);
+    searchSuggestions.classList.add('show');
+    return;
+  }
+
+  matches.slice(0, 8).forEach(item => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'search-suggestion';
+
+    const name = document.createElement('span');
+    name.className = 'suggestion-name';
+    name.textContent = item.name;
+
+    const desc = document.createElement('span');
+    desc.className = 'suggestion-desc';
+    desc.textContent = item.fn;
+
+    button.append(name, desc);
+
+    button.addEventListener('click', () => {
+      searchInputTop.value = item.name;
+      if (searchInput) {
+        searchInput.value = item.name;
+        filterNav(item.name);
+      }
+      searchSuggestions.classList.remove('show');
+      openAndScroll(item.id);
+    });
+
+    searchSuggestions.appendChild(button);
+  });
+
+  searchSuggestions.classList.add('show');
+}
+searchInput.addEventListener('input', () => {
+  filterNav(searchInput.value);
+  if (searchInputTop) searchInputTop.value = searchInput.value;
+});
+if (searchInputTop) {
+  searchInputTop.addEventListener('input', () => {
+    const value = searchInputTop.value;
+    filterNav(value);
+    if (searchInput) searchInput.value = value;
+    showSuggestions(value);
+  });
+  searchInputTop.addEventListener('focus', () => {
+    if (searchInputTop.value.trim()) showSuggestions(searchInputTop.value);
+  });
+
+  searchInputTop.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      searchSuggestions.classList.remove('show');
+      searchInputTop.blur();
+    }
+
+    if (e.key === 'Enter') {
+      const first = searchSuggestions?.querySelector('.search-suggestion');
+      if (first) first.click();
+    }
+  });
+}
+
+document.addEventListener('click', e => {
+  if (searchSuggestions && !e.target.closest('.topbar-search')) {
+    searchSuggestions.classList.remove('show');
+  }
+});
 
   // Helper: open a card (by id) and scroll to it
   function openAndScroll(id){
