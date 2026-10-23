@@ -3,27 +3,57 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bd // me</title>
+    <meta name="description" content="The personal site of Bedanta D — engineering, projects, and other internet things.">
+    <meta name="theme-color" content="#f3f3ef">
+    <meta name="darkreader-lock">
+    <title>Bedanta D — Personal site</title>
 
+    <script>
+        const storedThemePreference = localStorage.getItem("bedanta-theme");
+        if (storedThemePreference === "light" || storedThemePreference === "dark") {
+            document.documentElement.dataset.theme = storedThemePreference;
+        }
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <!-- Main Website -->
     <main class="container">
+        <aside class="scroll-rail" aria-label="Page sections">
+            <span class="scroll-rail-label">ON THIS PAGE</span>
+            <span class="scroll-rail-current" id="scroll-current" aria-hidden="true">INTRO</span>
+            <div class="scroll-rail-track" aria-hidden="true">
+                <span class="scroll-rail-progress" id="scroll-progress"></span>
+            </div>
+            <nav class="scroll-rail-nav" aria-label="Section navigation">
+                <span class="scroll-rail-marker" id="scroll-marker" aria-hidden="true"></span>
+                <a href="#intro" aria-label="Introduction" aria-current="location" data-section-name="INTRO"><span>00</span><i>INTRO</i></a>
+                <a href="#about" aria-label="About" data-section-name="ABOUT"><span>01</span><i>ABOUT</i></a>
+                <a href="#projects" aria-label="Projects" data-section-name="WORK"><span>02</span><i>WORK</i></a>
+                <a href="#applets" aria-label="Applets" data-section-name="TOOLS"><span>03</span><i>TOOLS</i></a>
+                <a href="#pc-specs" aria-label="Setup" data-section-name="SETUP"><span>04</span><i>SETUP</i></a>
+                <a href="#contact" aria-label="Contact" data-section-name="CONTACT"><span>05</span><i>CONTACT</i></a>
+                <a href="#donate" aria-label="Support" data-section-name="SUPPORT"><span>06</span><i>SUPPORT</i></a>
+            </nav>
+        </aside>
+
+        <header class="site-header">
+            <a class="wordmark" href="#" aria-label="Bedanta D home">BD<span>.</span></a>
+            <div class="header-actions">
+                <span class="header-note">INDEPENDENTLY CURIOUS · EST. 2005</span>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                    <svg class="theme-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+                        <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M8 1.75a6.25 6.25 0 0 0 0 12.5z" fill="currentColor" />
+                    </svg>
+                    <span class="theme-toggle-label">DARK</span>
+                </button>
+            </div>
+        </header>
 
         <!-- Hero Window -->
-        <section class="window hero">
-
-            <div class="window-top">
-                <span>me.sh</span>
-                <div class="buttons">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-
+        <section class="window hero" id="intro">
             <div class="window-content">
 
                 <div class="profile">
@@ -32,49 +62,26 @@
                 </div>
 
                 <div class="hero-text">
-                    <h1>Bedanta D</h1>
+                    <p class="hero-kicker"><span class="status-dot" aria-hidden="true"></span> ENGINEERING STUDENT · BUILDER · HUMAN</p>
+                    <h1>Making<br>things<span class="accent-dot">.</span></h1>
 
                     <p id="changing-text">
                         Electrical Engineering Student
                     </p>
 
-                    <div class="hero-links">
-                        <a href="#about">about</a>
-                        <a href="#projects">projects</a>
-                        <a href="#applets">applets</a>
-                        <a href="#pc-specs">specs</a>
-                        <a href="#contact">contact</a>
-                        <a href="#donate">donate</a>
-                    </div>
+                    <a class="hero-link" href="#projects">EXPLORE MY WORK <span aria-hidden="true">↘</span></a>
                 </div>
 
             </div>
 
         </section>
 
-        <!-- Floating Music Widget -->
-        <div class="music-float" aria-label="Music controls">
-            <button id="toggle-music-btn" class="music-float-button" aria-expanded="false" aria-controls="music-controls">
-                <img class="music-icon" src="https://ccvaults.com/assets/80.%20Particles/note.png" alt="Music">
-            </button>
-            <div class="music-controls" id="music-controls" style="display: none;" aria-hidden="true">
-                <div class="music-info">Alpha - C418</div>
-                <input type="range" id="seekbar" min="0" max="100" value="0" class="seekbar" aria-label="Seek position">
-                <div class="controls-row">
-                    <button id="music-btn" class="play-btn">Play</button>
-                    <div class="volume-control">
-                        <span>🔊</span>
-                        <input type="range" id="volume" min="0" max="100" value="70" class="volume-slider" aria-label="Volume control">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- About -->
         <section id="about" class="window">
 
-            <div class="window-top">
-                <span>about.txt</span>
+            <div class="section-heading">
+                <span class="section-index">01 / ABOUT</span>
+                <h2>A little about me<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content about">
@@ -92,21 +99,13 @@
         <!-- Projects -->
         <section id="projects" class="window">
 
-            <div class="window-top">
-                <span>projects/</span>
+            <div class="section-heading">
+                <span class="section-index">02 / SELECTED WORK</span>
+                <h2>Things I’ve made<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content section-grid">
 
-
-                <article class="card">
-                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/32.%20Admin/Command_Block_Minecart.png" alt="Project icon">
-                    <div class="card-copy">
-                        <span class="card-title">8051 Instruction Set</span>
-                        <p class="card-meta">Instruction set for 8051 Microcontroller.</p>
-                    </div>
-                    <a class="card-link" href="/8051-instruction-set.html" target="_blank" rel="noreferrer">Open</a>
-                </article>
 
                 <article class="card">
                     <img class="card-icon" src="https://ccvaults.com/thumbnails/10.%20Items/11.%20Materials/Charcoal.png" alt="Project icon">
@@ -177,11 +176,20 @@
         <!-- Applets -->
         <section id="applets" class="window">
 
-            <div class="window-top">
-                <span>applets/</span>
+            <div class="section-heading">
+                <span class="section-index">03 / LITTLE UTILITIES</span>
+                <h2>Tools for the web<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content section-grid">
+                <article class="card">
+                    <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/32.%20Admin/Command_Block_Minecart.png" alt="Project icon">
+                    <div class="card-copy">
+                        <span class="card-title">8051 Instruction Set</span>
+                        <p class="card-meta">Instruction set for 8051 Microcontroller.</p>
+                    </div>
+                    <a class="card-link" href="/8051-instruction-set.html" target="_blank" rel="noreferrer">Open</a>
+                </article>
                 <article class="card">
                     <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/21.%20Decoration/Amethyst_Cluster.png" alt="Applet icon">
                     <div class="card-copy">
@@ -205,8 +213,9 @@
         <!-- PC Specs -->
         <section id="pc-specs" class="window">
 
-            <div class="window-top">
-                <span>about-pc/</span>
+            <div class="section-heading">
+                <span class="section-index">04 / THE WORKBENCH</span>
+                <h2>My setup<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content">
@@ -253,9 +262,10 @@
                             <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/28.%20Trial%20Chambers/Trial_Key.png" alt="Keyboard icon">
                             <div class="card-copy">
                                 <span class="card-title">Keyboard</span>
-                                <p class="card-meta">URX x AJAZZ AK820 Max Plus</p>
+                                <p class="card-meta">AULA F75</p>
+                                <p style="font-size: 12px;">Star-Vector Switches</p>
                             </div>
-                            <a class="card-link" href="https://urx.co.in/products/ajazz-ak820-max-plus-keyboard-orange-copy" target="_blank" rel="noreferrer">Link</a>
+                            <a class="card-link" href="https://aulaindia.com/product/aula-f75-75-wireless-trio-mode-mechanical-gaming-keyboard-with-knob-thunder-black-star-vectorseiya-switch-f75tbs/" target="_blank" rel="noreferrer">Link</a>
                         </article>
 
                         <article class="card">
@@ -293,8 +303,9 @@
         <!-- Contact -->
         <section id="contact" class="window">
 
-            <div class="window-top">
-                <span>contact/</span>
+            <div class="section-heading">
+                <span class="section-index">05 / SAY HELLO</span>
+                <h2>Find me around<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content section-grid">
@@ -302,7 +313,7 @@
                     <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/23.%20Flowers/Dandelion.png" alt="Contact icon">
                     <div class="card-copy">
                         <span class="card-title">Email</span>
-                        <p class="card-meta"><a href="mailto:atgc@duck.com">atgc[at]duck[dot]com</a></p>
+                        <p class="card-meta">atgc[at]duck[dot]com</p>
                     </div>
                 </article>
 
@@ -334,7 +345,7 @@
                     <img class="card-icon" src="https://ccvaults.com/assets/10.%20Items/23.%20Flowers/Pink_Petals.png" alt="Contact icon">
                     <div class="card-copy">
                         <span class="card-title">Instagram</span>
-                        <p class="card-meta"><a href="https://instagram.com/cosmo_.fr" target="_blank">@cosmo_.fr</a></p>
+                        <p class="card-meta"><a href="https://instagram.com/7teen.april" target="_blank">@7teen.april</a></p>
                     </div>
                 </article>
             </div>
@@ -344,8 +355,9 @@
         <!-- Donate -->
         <section id="donate" class="window">
 
-            <div class="window-top">
-                <span>donate/</span>
+            <div class="section-heading">
+                <span class="section-index">06 / SUPPORT</span>
+                <h2>Keep the lights on<span class="accent-dot">.</span></h2>
             </div>
 
             <div class="window-content donate-grid section-grid">
@@ -369,9 +381,6 @@
         </section>
 
     </main>
-
-    <!-- Audio -->
-    <audio id="bg-music" src="media/alpha_c418.mp3" loop></audio>
 
     <script src="script.js"></script>
 </body>
