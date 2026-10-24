@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="PixelPlane Privacy Architecture — 100% in-browser image processing with zero server uploads, no cookies, and no tracking."
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>Privacy Architecture — PixelPlane</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="PixelPlane home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+        <span class="brand-badge">STUDIO</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#tools">All tools</a>
+        <a class="nav-link" href="how-it-works.html">How it works</a>
+        <a class="nav-link" href="index.html#creator">About Creator</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+          title="Switch to dark mode"
+          aria-pressed="false"
+        >
+          <span class="theme-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+        </button>
+        <a class="header-cta" href="index.html#tools">Explore tools <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main class="content-page">
+      <header class="page-header">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span> ZERO SERVER UPLOADS · 100% IN-BROWSER
+        </div>
+        <h1 class="page-title">Privacy by Architecture, Not Just by Policy</h1>
+        <p class="page-subtitle">
+          Most online image tools require you to upload personal photos, receipts, or confidential design assets to remote cloud servers. PixelPlane was engineered with an absolute zero-trust architecture: your files never leave your device.
+        </p>
+      </header>
+
+      <!-- Section 1 -->
+      <article class="content-card">
+        <h2>The Zero-Upload Technical Guarantee</h2>
+        <p>
+          PixelPlane operates entirely within your browser's local sandbox using the modern HTML5 Canvas API, FileReader, and JavaScript TypedArrays. When you drag an image onto PixelPlane:
+        </p>
+        <div class="feature-grid-2">
+          <div class="feature-box">
+            <span class="feature-box-icon">🔒</span>
+            <h3>No Network Transmission</h3>
+            <p>Your image is decoded into volatile browser RAM. Not a single byte is transmitted across the internet to any API, server, or cloud storage bucket.</p>
+          </div>
+          <div class="feature-box">
+            <span class="feature-box-icon">⚡</span>
+            <h3>DevTools Verifiable</h3>
+            <p>You can verify this yourself: open your browser's Developer Tools (F12) &gt; Network tab, process an image, and see that zero outbound HTTP POST/PUT requests occur.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 2: Comparison -->
+      <article class="content-card">
+        <h2>How PixelPlane Compares to Cloud Image Tools</h2>
+        <p>
+          Cloud-based image utilities collect your media on their disks, analyze them, and often enforce strict bandwidth caps or watermarks. Here is how PixelPlane is fundamentally different:
+        </p>
+
+        <div class="matrix-table-wrapper">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Traditional Cloud Editors</th>
+                <th>PixelPlane Architecture</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Image Destination</strong></td>
+                <td><span class="col-cross">Uploaded to remote cloud servers</span></td>
+                <td><span class="col-check">Remains 100% on your local machine</span></td>
+              </tr>
+              <tr>
+                <td><strong>Server Disk Retention</strong></td>
+                <td><span class="col-cross">Saved on disks (1 hour to indefinite)</span></td>
+                <td><span class="col-check">Never touches any disk outside your device</span></td>
+              </tr>
+              <tr>
+                <td><strong>Internet / Bandwidth Latency</strong></td>
+                <td><span class="col-cross">Subject to upload and download speeds</span></td>
+                <td><span class="col-check">Instant zero-latency GPU rendering</span></td>
+              </tr>
+              <tr>
+                <td><strong>Account / Login Requirement</strong></td>
+                <td><span class="col-cross">Email, account, or credit card required</span></td>
+                <td><span class="col-check">No accounts, no logins, no paywalls</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cookies &amp; User Tracking</strong></td>
+                <td><span class="col-cross">Marketing trackers &amp; analytics pixels</span></td>
+                <td><span class="col-check">Zero tracking pixels, zero analytics scripts</span></td>
+              </tr>
+              <tr>
+                <td><strong>Offline Capability</strong></td>
+                <td><span class="col-cross">Fails without an active connection</span></td>
+                <td><span class="col-check">Works completely offline once loaded</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- Section 3: EXIF Metadata Sanitization -->
+      <article class="content-card">
+        <h2>Metadata &amp; EXIF Protection</h2>
+        <p>
+          Smartphones and digital cameras automatically inject rich metadata into every photo you take. This often includes:
+        </p>
+        <ul style="color: var(--muted); font-size: 14.5px; line-height: 1.8; margin-bottom: 16px;">
+          <li>Exact GPS coordinates (latitude, longitude, altitude) pointing directly to your home or office</li>
+          <li>Device serial numbers and unique hardware identifiers</li>
+          <li>Exact capture timestamps, lens configuration, and exposure settings</li>
+          <li>Embedded thumbnail caches of previous uncropped edits</li>
+        </ul>
+        <p>
+          When you use PixelPlane's <strong>Clean &amp; Strip EXIF</strong> tool or re-export through our compression pipeline, the image pixels are rendered afresh onto an HTML5 canvas element. This mathematically discards all embedded EXIF, IPTC, and XMP metadata chunks, ensuring your shared media is sterile and safe.
+        </p>
+      </article>
+
+      <!-- Section 4: Local Storage -->
+      <article class="content-card">
+        <h2>What Information Is Stored Locally?</h2>
+        <p>
+          PixelPlane uses browser <code>localStorage</code> strictly for user convenience to remember your visual theme preference:
+        </p>
+        <p>
+          <code>pixelplane-theme</code>: Set to either <code>"dark"</code> or <code>"light"</code> so your theme preference persists between browser visits. No personal data, session tokens, or image history is ever written to storage.
+        </p>
+      </article>
+
+      <!-- Call to Action -->
+      <div class="cta-banner">
+        <h2>Ready for secure, private image tools?</h2>
+        <p>Process your photos with zero server uploads, zero accounts, and maximum speed.</p>
+        <a class="primary-button" href="index.html#tools">
+          Open Image Toolkit
+          <span class="button-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+      </a>
+      <span>Fast, private utilities for creators. <span class="footer-badge">100% In-Browser</span></span>
+      <div class="footer-links">
+        <a href="index.html#tools">Tools</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a>
+      </div>
+      <span>Made with precision for a smooth creative flow ✦</span>
+    </footer>
+  </body>
+</html>

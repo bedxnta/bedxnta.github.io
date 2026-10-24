@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Free, private image toolkit for compressing, resizing, cropping, converting, and editing images locally in your browser."
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>PixelPlane — Image tools, made simple</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="PixelPlane home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+        <span class="brand-badge">STUDIO</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#tools">All tools</a>
+        <a class="nav-link" href="#how-it-works">How it works</a>
+        <a class="nav-link" href="#creator">About Creator</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+          title="Switch to dark mode"
+          aria-pressed="false"
+        >
+          <span class="theme-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+        </button>
+        <a class="header-cta" href="#tools">Explore tools <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span> 100% IN-BROWSER · ZERO SERVER UPLOADS
+          </div>
+          <h1>Image work, without<br />the <span class="accent-text">busywork.</span></h1>
+          <p class="hero-description">
+            The snappy little tools that make big photo tasks effortless. Compress, resize, crop, and convert your images with pixel-perfect control in a couple of clicks.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#tools">
+              Find your tool
+              <span class="button-arrow" aria-hidden="true">↓</span>
+            </a>
+            <button class="secondary-button" type="button" onclick="document.querySelector('#tool-search').focus();">
+              <span aria-hidden="true">⌕</span> Quick Search (<kbd>/</kbd>)
+            </button>
+          </div>
+          <div class="privacy-note">
+            <span class="shield-icon" aria-hidden="true">🛡️</span>
+            Your images never leave this computer. Processed via local Web APIs.
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Illustration of studio image editing canvas">
+          <div class="hero-art-bg-circles"></div>
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <div class="spark spark-one">✳</div>
+          <div class="spark spark-two">✦</div>
+
+          <div class="art-photo-card">
+            <div class="art-card-header">
+              <span class="art-card-tag">CANVAS EDIT</span>
+              <span class="art-card-dim">1920 × 1080 px</span>
+            </div>
+            <div class="art-canvas-preview">
+              <div class="art-canvas-overlay">
+                <div class="art-canvas-corner corner-tl"></div>
+                <div class="art-canvas-corner corner-tr"></div>
+                <div class="art-canvas-corner corner-bl"></div>
+                <div class="art-canvas-corner corner-br"></div>
+              </div>
+              <div class="art-saving-badge">-78% WebP</div>
+            </div>
+          </div>
+
+          <div class="floating-chip">
+            <span class="chip-check">✓</span> 0 MB uploaded to cloud
+          </div>
+          <div class="hero-caption">Pixel-precise. Zero latency.</div>
+        </div>
+      </section>
+
+      <!-- Tools Section -->
+      <section class="tools-section" id="tools">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow section-eyebrow">YOUR EVERYDAY TOOLKIT</div>
+            <h2>What can we help with?</h2>
+            <p class="section-description">
+              Good things happen when the image busywork gets out of the way.
+            </p>
+          </div>
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Search image tools</span>
+            <input id="tool-search" type="search" placeholder="Search tools..." autocomplete="off" />
+            <kbd>/</kbd>
+          </label>
+        </div>
+
+        <div class="tool-filters" role="group" aria-label="Filter image tools">
+          <button class="filter-chip selected" type="button" data-filter="all">
+            All tools <span>9</span>
+          </button>
+          <button class="filter-chip" type="button" data-filter="optimize">Optimize</button>
+          <button class="filter-chip" type="button" data-filter="transform">Transform</button>
+          <button class="filter-chip" type="button" data-filter="convert">Convert</button>
+          <button class="filter-chip" type="button" data-filter="privacy">Privacy</button>
+        </div>
+
+        <div class="tool-grid" id="tool-grid">
+          <!-- Dynamically populated by app.js -->
+        </div>
+
+        <p class="empty-state" id="empty-state" hidden>
+          No tools match that search. Try searching for "compress", "crop", "resize", or "convert".
+        </p>
+      </section>
+
+      <!-- How it Works Section -->
+      <section class="promise-section" id="how-it-works">
+        <div class="promise-heading">
+          <span class="promise-spark">✳</span>
+          <div>
+            <div class="eyebrow section-eyebrow">SIMPLE BY DESIGN</div>
+            <h2>Your images stay yours.</h2>
+          </div>
+        </div>
+        <div class="promise-details">
+          <p>
+            No accounts, no paywalls, and no sending sensitive photos over the internet. PixelPlane executes all scaling, compression, and filtering operations directly inside your browser using HTML5 Canvas & Web Workers.
+          </p>
+          <div class="promise-points">
+            <div class="promise-point">
+              <span class="point-num">01</span>
+              <span class="point-title">Pick a tool</span>
+              <span class="point-desc">Select from compression, resize, crop, or format conversion.</span>
+            </div>
+            <div class="promise-point">
+              <span class="point-num">02</span>
+              <span class="point-title">Drop your images</span>
+              <span class="point-desc">Drag & drop files or press Ctrl+V to paste directly from your clipboard.</span>
+            </div>
+            <div class="promise-point">
+              <span class="point-num">03</span>
+              <span class="point-title">Instant download</span>
+              <span class="point-desc">Fine-tune with live preview, then download your optimized asset.</span>
+            </div>
+          </div>
+          <div style="margin-top: 24px;">
+            <a href="how-it-works.html" class="header-cta">
+              Deep dive into our browser engine &amp; pipeline <span>→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Creator Showcase Section (bedanta.space) -->
+      <section class="creator-section" id="creator" aria-labelledby="creator-title">
+        <div class="bedanta-window">
+          <div class="bedanta-window-content">
+            <div class="bedanta-text-col">
+              <div class="bedanta-kicker">
+                <span class="bedanta-dot"></span> ENGINEERING STUDENT · JOJO · HUMAN
+              </div>
+              <h2 class="bedanta-title" id="creator-title">
+                Building<br />things<span class="bedanta-accent-dot">.</span>
+              </h2>
+              <p class="bedanta-sub" id="bedanta-sub">Really Good Video Gamer</p>
+              <a class="bedanta-link" href="https://bedanta.space" target="_blank" rel="noopener noreferrer">
+                BEDANTA.SPACE <span>↘</span>
+              </a>
+            </div>
+
+            <div class="bedanta-graphic" aria-hidden="true">
+              <div class="bedanta-halo"></div>
+              <div class="bedanta-avatar-box">
+                <img src="assets/bedanta/avatar.png" alt="Bedanta avatar" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="#">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+      </a>
+      <span>Fast, private image utils for everyone. <span class="footer-badge">100% In-Browser</span></span>
+      <div class="footer-links">
+        <a href="#tools">Tools</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a>
+      </div>
+      <span>Made with precision for a smooth creative flow ✦</span>
+    </footer>
+
+    <!-- Interactive Tool Dialog Modal -->
+    <dialog class="tool-dialog" id="tool-dialog" aria-labelledby="dialog-title">
+      <form method="dialog" class="dialog-close-form">
+        <button class="dialog-close" aria-label="Close dialog">×</button>
+      </form>
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <span class="tool-icon dialog-tool-icon icon-cobalt" id="dialog-icon" aria-hidden="true"></span>
+          <div>
+            <div class="eyebrow dialog-badge" id="dialog-badge">PIXELPLANE TOOL</div>
+            <h2 id="dialog-title">Compress Image</h2>
+          </div>
+        </div>
+        <p class="dialog-description" id="dialog-description">
+          Shrink image file size with smart quality control.
+        </p>
+
+        <input id="file-input" type="file" hidden />
+        <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Choose files or drop them here">
+          <div class="drop-upload-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <strong class="drop-prompt">Drop images here or <span>browse</span></strong>
+          <span class="drop-hint" id="drop-hint">PNG, JPG, WebP · Single or Batch</span>
+        </div>
+
+        <div class="file-list" id="file-list" aria-live="polite"></div>
+        <div class="tool-options" id="tool-options"></div>
+
+        <button class="primary-button process-button" id="process-button" type="button" disabled>
+          <span id="process-label">Drop an image to continue</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+        <p class="dialog-privacy">
+          <span aria-hidden="true">🛡️</span> Your images are processed locally in your browser. Nothing is sent to any server.
+        </p>
+      </div>
+    </dialog>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

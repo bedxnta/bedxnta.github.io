@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="How PixelPlane Works — Learn about the browser canvas pipeline, compression algorithms, and client-side image processing architecture."
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>How It Works — PixelPlane</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="PixelPlane home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+        <span class="brand-badge">STUDIO</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#tools">All tools</a>
+        <a class="nav-link active" href="how-it-works.html">How it works</a>
+        <a class="nav-link" href="index.html#creator">About Creator</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+          title="Switch to dark mode"
+          aria-pressed="false"
+        >
+          <span class="theme-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+        </button>
+        <a class="header-cta" href="index.html#tools">Explore tools <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main class="content-page">
+      <header class="page-header">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span> UNDER THE HOOD · CLIENT-SIDE ARCHITECTURE
+        </div>
+        <h1 class="page-title">How PixelPlane Works: Zero Latency, Maximum Fidelity</h1>
+        <p class="page-subtitle">
+          PixelPlane replaces bulky desktop applications and privacy-invasive cloud editors with pure, modern web standards. Here is the technical breakdown of how your browser manipulates pixels in real time.
+        </p>
+      </header>
+
+      <!-- Section 1: The 4-Step Engine Pipeline -->
+      <article class="content-card">
+        <h2>The 4-Step Image Engine Pipeline</h2>
+        <p>
+          Every transformation inside PixelPlane flows through our streamlined, hardware-accelerated processing engine:
+        </p>
+
+        <div class="pipeline-list">
+          <div class="pipeline-step">
+            <span class="step-badge">01</span>
+            <div class="step-body">
+              <h3>Ingestion &amp; Decoding</h3>
+              <p>
+                When you drag and drop, browse, or paste an image (Ctrl+V), the file is read via the browser's <code>FileReader</code> API. It is decoded directly into an <code>HTMLImageElement</code> in system RAM without ever touching a network socket.
+              </p>
+              <span class="step-code">FileReader.readAsDataURL() → ImageBitmap</span>
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">02</span>
+            <div class="step-body">
+              <h3>Hardware-Accelerated Canvas Rendering</h3>
+              <p>
+                The image is mounted onto an off-screen HTML5 <code>&lt;canvas&gt;</code> element. We configure <code>imageSmoothingQuality = "high"</code> with multi-step bicubic scaling, matrix transformations (for rotation and mirroring), and coordinate clipping (for visual cropping).
+              </p>
+              <span class="step-code">CanvasRenderingContext2D + GPU Acceleration</span>
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">03</span>
+            <div class="step-body">
+              <h3>Format Serialization &amp; Compression</h3>
+              <p>
+                The canvas pixel buffer is serialized into your chosen format. WebP and AVIF utilize advanced predictive entropy coding for massive file savings. For formats like BMP where native browser export is missing, PixelPlane uses our built-in pure JavaScript 24-bit binary BMP serializer.
+              </p>
+              <span class="step-code">canvas.toBlob() + Pure JS Binary BMP Serializer</span>
+            </div>
+          </div>
+
+          <div class="pipeline-step">
+            <span class="step-badge">04</span>
+            <div class="step-body">
+              <h3>Zero-Latency Direct Download</h3>
+              <p>
+                The resulting <code>Blob</code> is converted into a temporary browser object URL (<code>URL.createObjectURL</code>). An automated download is initiated directly to your operating system's Downloads folder, followed by immediate URL revocation to keep memory usage minimal.
+              </p>
+              <span class="step-code">URL.createObjectURL(blob) → Instant Download</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 2: Format Comparison -->
+      <article class="content-card">
+        <h2>Understanding Format Choices</h2>
+        <p>Choosing the optimal image format depends on your intended use case:</p>
+
+        <div class="feature-grid-2">
+          <div class="feature-box">
+            <span class="feature-box-icon">🌐</span>
+            <h3>WebP (Recommended)</h3>
+            <p><strong>30%–50% smaller than JPEG</strong> with identical visual quality. Supports full alpha transparency and is supported by 97%+ of all browsers worldwide.</p>
+          </div>
+
+          <div class="feature-box">
+            <span class="feature-box-icon">📷</span>
+            <h3>JPEG</h3>
+            <p><strong>Universal standard</strong> for photography. Does not support transparent backgrounds, but is compatible with every legacy app, print shop, and smart TV.</p>
+          </div>
+
+          <div class="feature-box">
+            <span class="feature-box-icon">🎨</span>
+            <h3>PNG</h3>
+            <p><strong>Lossless compression</strong>. Best for logos, vector graphics, and graphics with sharp contrast text where no artifacting can be tolerated.</p>
+          </div>
+
+          <div class="feature-box">
+            <span class="feature-box-icon">🚀</span>
+            <h3>AVIF</h3>
+            <p><strong>Next-generation codec</strong> derived from AV1 video frames. Delivers incredible compression efficiency for modern, high-traffic websites.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 3: Technical FAQ -->
+      <article class="content-card">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-icon">?</span>
+              Are there file size or resolution limits?
+            </div>
+            <p class="faq-a">
+              Unlike cloud services that cap files at 5MB or 10MB to save their own server bandwidth, PixelPlane has <strong>no artificial limits</strong>. The only constraint is your computer's available memory. You can process 4K, 8K, and high-resolution DSLR photos without restriction.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-icon">?</span>
+              Does PixelPlane work completely offline?
+            </div>
+            <p class="faq-a">
+              <strong>Yes!</strong> Once the page is loaded in your browser tab, all JavaScript code is running locally. You can turn off your Wi-Fi or go into Airplane Mode, and every tool (compress, resize, crop, rotate, watermark, convert) continues to function seamlessly.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-icon">?</span>
+              How does image compression work without losing quality?
+            </div>
+            <p class="faq-a">
+              PixelPlane leverages perceptual quantization. Human vision is much more sensitive to subtle lighting changes (luminance) than to fine color nuances (chrominance). Smart lossy compression discards imperceptible high-frequency color variations while preserving crisp outlines and contrast.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              <span class="faq-q-icon">?</span>
+              Why is PixelPlane so much faster than other tools?
+            </div>
+            <p class="faq-a">
+              Traditional online editors require you to wait while your photo uploads over the internet, wait in a remote server processing queue, and then wait for the result to download again. PixelPlane executes immediately on your device's GPU and CPU, eliminating network delays.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Call to Action -->
+      <div class="cta-banner">
+        <h2>Experience the speed of client-side tools</h2>
+        <p>Instant image optimization with zero waiting and zero server uploads.</p>
+        <a class="primary-button" href="index.html#tools">
+          Explore All Tools
+          <span class="button-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb" />
+            <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981" />
+            <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e" />
+          </svg>
+        </span>
+        <span>pixelplane</span>
+      </a>
+      <span>Fast, private utilities for creators. <span class="footer-badge">100% In-Browser</span></span>
+      <div class="footer-links">
+        <a href="index.html#tools">Tools</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a>
+      </div>
+      <span>Made with precision for a smooth creative flow ✦</span>
+    </footer>
+  </body>
+</html>
