@@ -296,16 +296,18 @@ export const TOOLS = {
       const canvas = container.querySelector("#crop-canvas");
       const cropBox = container.querySelector("#crop-box");
       const cropContainer = container.querySelector("#crop-canvas-box");
+      const cropEditor = container.querySelector(".crop-editor-wrapper");
       const dimDisplay = container.querySelector("#crop-dimensions");
 
       const ctx = canvas.getContext("2d");
-      const maxW = 480;
+      const maxW = Math.max(1, Math.min(480, cropEditor.clientWidth - 28));
       const scaleFactor = Math.min(1, maxW / item.width);
       const displayW = Math.round(item.width * scaleFactor);
       const displayH = Math.round(item.height * scaleFactor);
 
       canvas.width = displayW;
       canvas.height = displayH;
+      cropContainer.style.width = `${displayW}px`;
       ctx.drawImage(item.img, 0, 0, displayW, displayH);
 
       // Initial crop box at 80%
@@ -369,12 +371,15 @@ export const TOOLS = {
       // Draggable crop box
       let isDragging = false;
       let startX, startY, initBoxX, initBoxY;
+      let pointerScaleX, pointerScaleY;
 
       cropBox.addEventListener("pointerdown", (e) => {
         if (e.target.classList.contains("crop-handle")) return;
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
+        pointerScaleX = canvas.getBoundingClientRect().width / displayW;
+        pointerScaleY = canvas.getBoundingClientRect().height / displayH;
         initBoxX = boxX;
         initBoxY = boxY;
         cropBox.setPointerCapture(e.pointerId);
@@ -383,8 +388,8 @@ export const TOOLS = {
 
       cropBox.addEventListener("pointermove", (e) => {
         if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
+        const dx = (e.clientX - startX) / pointerScaleX;
+        const dy = (e.clientY - startY) / pointerScaleY;
         boxX = initBoxX + dx;
         boxY = initBoxY + dy;
         updateBoxUI();
@@ -403,11 +408,14 @@ export const TOOLS = {
         const isBl = handle.classList.contains("handle-bl");
         const isTr = handle.classList.contains("handle-tr");
         const isTl = handle.classList.contains("handle-tl");
+        let pointerScaleX, pointerScaleY;
 
         handle.addEventListener("pointerdown", (e) => {
           isResizing = true;
           hStartX = e.clientX;
           hStartY = e.clientY;
+          pointerScaleX = canvas.getBoundingClientRect().width / displayW;
+          pointerScaleY = canvas.getBoundingClientRect().height / displayH;
           initW = boxW;
           initH = boxH;
           initX = boxX;
@@ -419,8 +427,8 @@ export const TOOLS = {
 
         handle.addEventListener("pointermove", (e) => {
           if (!isResizing) return;
-          const dx = e.clientX - hStartX;
-          const dy = e.clientY - hStartY;
+          const dx = (e.clientX - hStartX) / pointerScaleX;
+          const dy = (e.clientY - hStartY) / pointerScaleY;
 
           if (isBr) {
             boxW = initW + dx;
@@ -579,6 +587,520 @@ export const TOOLS = {
         results.push(res);
       }
       return results;
+    }
+  },
+
+  pdf: {
+    id: "pdf",
+    title: "Image to PDF",
+    category: "convert",
+    badgeTone: "icon-cobalt",
+    badgeLabel: "CONVERT",
+    description: "Combine images into a PDF, one image per page.",
+    searchTerms: "pdf document combine images pages paper a4 letter",
+    accept: "image/*",
+    multiple: true,
+    hint: "PNG, JPG, WebP · Select images in page order",
+    actionLabel: "Create PDF",
+    svgIcon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v6h5M8 14h8M8 17h6"/></svg>`,
+    renderControls(container, items) {
+      container.innerHTML = `
+        <div class="control-grid-2">
+          <div class="control-group">
+            <label class="control-label" for="pdf-page-size">Page Size</label>
+            <select class="select-input" id="pdf-page-size">
+              <option value="a4" selected>A4</option>
+              <option value="letter">US Letter</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="pdf-orientation">Orientation</label>
+            <select class="select-input" id="pdf-orientation">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </div>
+        </div>
+        <p class="control-hint">${items.length} ${items.length === 1 ? "image" : "images"} · One image per PDF page</p>
+      `;
+    },
+    async process(items, container) {
+      const pageSizes = {
+        a4: { width: 595.28, height: 841.89, pixelsPerPoint: 3 },
+        letter: { width: 612, height: 792, pixelsPerPoint: 3 }
+      };
+      const pageSize = pageSizes[container.querySelector("#pdf-page-size").value];
+      const isLandscape = container.querySelector("#pdf-orientation").value === "landscape";
+      const pageWidth = isLandscape ? pageSize.height : pageSize.width;
+      const pageHeight = isLandscape ? pageSize.width : pageSize.height;
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      const jpegPages = [];
+
+      canvas.width = Math.round(pageWidth * pageSize.pixelsPerPoint);
+      canvas.height = Math.round(pageHeight * pageSize.pixelsPerPoint);
+
+      for (const item of items) {
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        const scale = Math.min(canvas.width / item.width, canvas.height / item.height);
+        const imageWidth = item.width * scale;
+        const imageHeight = item.height * scale;
+        context.drawImage(
+          item.img,
+          (canvas.width - imageWidth) / 2,
+          (canvas.height - imageHeight) / 2,
+          imageWidth,
+          imageHeight
+        );
+
+        const jpegBlob = await new Promise((resolve, reject) => {
+          canvas.toBlob((blob) => {
+            if (blob) resolve(blob);
+            else reject(new Error(`Could not prepare "${item.name}" for the PDF.`));
+          }, "image/jpeg", 0.92);
+        });
+        jpegPages.push(new Uint8Array(await jpegBlob.arrayBuffer()));
+      }
+
+      const encoder = new TextEncoder();
+      const chunks = [];
+      const offsets = [0];
+      let byteLength = 0;
+
+      function appendBytes(bytes) {
+        chunks.push(bytes);
+        byteLength += bytes.length;
+      }
+
+      function appendText(text) {
+        appendBytes(encoder.encode(text));
+      }
+
+      function writeObject(id, parts) {
+        offsets[id] = byteLength;
+        appendText(`${id} 0 obj\n`);
+        parts.forEach((part) => {
+          if (typeof part === "string") appendText(part);
+          else appendBytes(part);
+        });
+        appendText("\nendobj\n");
+      }
+
+      appendText("%PDF-1.4\n");
+      const pageObjectIds = jpegPages.map((_, index) => 3 + index * 3);
+      writeObject(1, ["<< /Type /Catalog /Pages 2 0 R >>"]);
+      writeObject(2, [
+        `<< /Type /Pages /Kids [${pageObjectIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${jpegPages.length} >>`
+      ]);
+
+      jpegPages.forEach((jpeg, index) => {
+        const pageId = pageObjectIds[index];
+        const imageId = pageId + 1;
+        const contentId = pageId + 2;
+        const content = encoder.encode(`q\n${pageWidth} 0 0 ${pageHeight} 0 0 cm\n/Im0 Do\nQ`);
+
+        writeObject(pageId, [
+          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /XObject << /Im0 ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`
+        ]);
+        writeObject(imageId, [
+          `<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`,
+          jpeg,
+          "\nendstream"
+        ]);
+        writeObject(contentId, [`<< /Length ${content.length} >>\nstream\n`, content, "\nendstream"]);
+      });
+
+      const crossReferenceOffset = byteLength;
+      appendText(`xref\n0 ${offsets.length}\n0000000000 65535 f \n`);
+      for (let id = 1; id < offsets.length; id++) {
+        appendText(`${String(offsets[id]).padStart(10, "0")} 00000 n \n`);
+      }
+      appendText(
+        `trailer\n<< /Size ${offsets.length} /Root 1 0 R >>\nstartxref\n${crossReferenceOffset}\n%%EOF`
+      );
+
+      const firstName = items[0].name.replace(/\.[^/.]+$/, "");
+      ImageEngine.download(new Blob(chunks, { type: "application/pdf" }), `${firstName}-images.pdf`);
+      return [{ message: "PDF created successfully." }];
+    }
+  },
+
+  splitter: {
+    id: "splitter",
+    title: "Image Splitter",
+    category: "transform",
+    badgeTone: "icon-purple",
+    badgeLabel: "TRANSFORM",
+    description: "Split an image into a grid of downloadable tiles.",
+    searchTerms: "split grid tiles square puzzle instagram carousel image splitter",
+    accept: "image/*",
+    multiple: false,
+    hint: "PNG, JPG, WebP · Single image",
+    actionLabel: "Download ZIP",
+    svgIcon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18M3 12h18"/></svg>`,
+    renderControls(container, items) {
+      const item = items[0];
+      container.innerHTML = `
+        <div class="control-grid-2">
+          <div class="control-group">
+            <label class="control-label" for="split-columns">Columns</label>
+            <input class="number-input" id="split-columns" type="number" min="1" max="10" value="3" inputmode="numeric" />
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="split-rows">Rows</label>
+            <input class="number-input" id="split-rows" type="number" min="1" max="10" value="3" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="split-format">Tile Format</label>
+          <select class="select-input" id="split-format">
+            <option value="image/png" selected>PNG</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/webp">WebP</option>
+          </select>
+        </div>
+        <div class="split-preview">
+          <div class="split-preview-heading">
+            <span class="control-label">Live Preview</span>
+            <span class="split-tile-count" id="split-tile-count"></span>
+          </div>
+          <canvas id="split-preview-canvas" aria-label="Preview showing how the image will be split"></canvas>
+          <p class="control-hint">All tiles will be saved together in one ZIP file.</p>
+        </div>
+      `;
+
+      const columnsInput = container.querySelector("#split-columns");
+      const rowsInput = container.querySelector("#split-rows");
+      const previewCanvas = container.querySelector("#split-preview-canvas");
+      const tileCount = container.querySelector("#split-tile-count");
+      const previewContext = previewCanvas.getContext("2d");
+      const maxPreviewSide = 520;
+      const previewScale = Math.min(1, maxPreviewSide / Math.max(item.width, item.height));
+      const previewWidth = Math.max(1, Math.round(item.width * previewScale));
+      const previewHeight = Math.max(1, Math.round(item.height * previewScale));
+
+      previewCanvas.width = previewWidth;
+      previewCanvas.height = previewHeight;
+      previewContext.drawImage(item.img, 0, 0, previewWidth, previewHeight);
+      columnsInput.max = Math.min(10, item.width);
+      rowsInput.max = Math.min(10, item.height);
+
+      function updatePreview() {
+        const columns = Math.max(1, Math.min(Number(columnsInput.max), Math.round(Number(columnsInput.value) || 1)));
+        const rows = Math.max(1, Math.min(Number(rowsInput.max), Math.round(Number(rowsInput.value) || 1)));
+        columnsInput.value = columns;
+        rowsInput.value = rows;
+
+        previewContext.clearRect(0, 0, previewWidth, previewHeight);
+        previewContext.drawImage(item.img, 0, 0, previewWidth, previewHeight);
+        previewContext.save();
+        previewContext.strokeStyle = "#ffffff";
+        previewContext.lineWidth = Math.max(1, previewWidth / 320);
+        previewContext.setLineDash([6, 4]);
+        previewContext.shadowColor = "rgba(15, 23, 42, 0.9)";
+        previewContext.shadowBlur = 3;
+
+        for (let column = 1; column < columns; column++) {
+          const x = Math.round((previewWidth * column) / columns) + 0.5;
+          previewContext.beginPath();
+          previewContext.moveTo(x, 0);
+          previewContext.lineTo(x, previewHeight);
+          previewContext.stroke();
+        }
+        for (let row = 1; row < rows; row++) {
+          const y = Math.round((previewHeight * row) / rows) + 0.5;
+          previewContext.beginPath();
+          previewContext.moveTo(0, y);
+          previewContext.lineTo(previewWidth, y);
+          previewContext.stroke();
+        }
+        previewContext.restore();
+
+        tileCount.textContent = `${rows * columns} ${rows * columns === 1 ? "tile" : "tiles"}`;
+        container._splitData = { columns, rows };
+      }
+
+      columnsInput.addEventListener("input", updatePreview);
+      rowsInput.addEventListener("input", updatePreview);
+      updatePreview();
+    },
+    async process(items, container) {
+      const item = items[0];
+      const { columns, rows } = container._splitData;
+      const format = container.querySelector("#split-format").value;
+      const baseName = item.name.replace(/\.[^/.]+$/, "");
+      const tileWidth = item.width / columns;
+      const tileHeight = item.height / rows;
+      const encoder = new TextEncoder();
+      const crcTable = new Uint32Array(256);
+      for (let index = 0; index < crcTable.length; index++) {
+        let value = index;
+        for (let bit = 0; bit < 8; bit++) {
+          value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+        }
+        crcTable[index] = value >>> 0;
+      }
+
+      function checksum(bytes) {
+        let crc = 0xffffffff;
+        for (const byte of bytes) {
+          crc = crcTable[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+        }
+        return (crc ^ 0xffffffff) >>> 0;
+      }
+
+      function makeZipHeader(signature, values, filenameBytes) {
+        const header = new Uint8Array(30 + filenameBytes.length);
+        const view = new DataView(header.buffer);
+        view.setUint32(0, signature, true);
+        values.forEach(([offset, value, size]) => {
+          if (size === 2) view.setUint16(offset, value, true);
+          else view.setUint32(offset, value, true);
+        });
+        view.setUint16(26, filenameBytes.length, true);
+        header.set(filenameBytes, 30);
+        return header;
+      }
+
+      const zipParts = [];
+      const centralDirectory = [];
+      let zipOffset = 0;
+
+      for (let row = 0; row < rows; row++) {
+        const sourceY = Math.round(row * tileHeight);
+        const sourceBottom = Math.round((row + 1) * tileHeight);
+        for (let column = 0; column < columns; column++) {
+          const sourceX = Math.round(column * tileWidth);
+          const sourceRight = Math.round((column + 1) * tileWidth);
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.width = sourceRight - sourceX;
+          canvas.height = sourceBottom - sourceY;
+
+          if (format === "image/jpeg") {
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+          }
+          context.drawImage(
+            item.img,
+            sourceX,
+            sourceY,
+            canvas.width,
+            canvas.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+          const blob = await new Promise((resolve, reject) => {
+            canvas.toBlob((result) => {
+              if (result) resolve(result);
+              else reject(new Error(`Could not export tile ${row + 1}-${column + 1}.`));
+            }, format, 0.92);
+          });
+          const actualExtension = blob.type === "image/jpeg" ? "jpg" : blob.type === "image/webp" ? "webp" : "png";
+          const filenameBytes = encoder.encode(`${baseName}-r${row + 1}-c${column + 1}.${actualExtension}`);
+          const imageBytes = new Uint8Array(await blob.arrayBuffer());
+          const crc = checksum(imageBytes);
+          if (imageBytes.length > 0xffffffff || zipOffset > 0xffffffff) {
+            throw new Error("The tiles are too large to fit in a standard ZIP archive.");
+          }
+
+          const localHeader = makeZipHeader(0x04034b50, [
+            [4, 20, 2],
+            [6, 0x0800, 2],
+            [8, 0, 2],
+            [10, 0, 2],
+            [12, 0, 2],
+            [14, crc, 4],
+            [18, imageBytes.length, 4],
+            [22, imageBytes.length, 4]
+          ], filenameBytes);
+          zipParts.push(localHeader, imageBytes);
+
+          const centralHeader = new Uint8Array(46 + filenameBytes.length);
+          const centralView = new DataView(centralHeader.buffer);
+          centralView.setUint32(0, 0x02014b50, true);
+          centralView.setUint16(4, 20, true);
+          centralView.setUint16(6, 20, true);
+          centralView.setUint16(8, 0x0800, true);
+          centralView.setUint16(10, 0, true);
+          centralView.setUint16(12, 0, true);
+          centralView.setUint16(14, 0, true);
+          centralView.setUint32(16, crc, true);
+          centralView.setUint32(20, imageBytes.length, true);
+          centralView.setUint32(24, imageBytes.length, true);
+          centralView.setUint16(28, filenameBytes.length, true);
+          centralView.setUint32(42, zipOffset, true);
+          centralHeader.set(filenameBytes, 46);
+          centralDirectory.push(centralHeader);
+
+          zipOffset += localHeader.length + imageBytes.length;
+        }
+      }
+
+      const centralDirectorySize = centralDirectory.reduce((size, part) => size + part.length, 0);
+      if (zipOffset + centralDirectorySize > 0xffffffff) {
+        throw new Error("The tiles are too large to fit in a standard ZIP archive.");
+      }
+      const endRecord = new Uint8Array(22);
+      const endView = new DataView(endRecord.buffer);
+      endView.setUint32(0, 0x06054b50, true);
+      endView.setUint16(8, centralDirectory.length, true);
+      endView.setUint16(10, centralDirectory.length, true);
+      endView.setUint32(12, centralDirectorySize, true);
+      endView.setUint32(16, zipOffset, true);
+
+      const zipBlob = new Blob([...zipParts, ...centralDirectory, endRecord], { type: "application/zip" });
+      ImageEngine.download(zipBlob, `${baseName}-tiles.zip`);
+      return [{ message: `Downloaded ${rows * columns} tiles in one ZIP file.` }];
+    }
+  },
+
+  markup: {
+    id: "markup",
+    title: "Image Markup",
+    category: "transform",
+    badgeTone: "icon-mint",
+    badgeLabel: "DRAW",
+    description: "Draw brush strokes directly on an image.",
+    searchTerms: "markup annotate draw brush strokes screenshot feedback",
+    accept: "image/*",
+    multiple: false,
+    hint: "PNG, JPG, WebP · Single image",
+    actionLabel: "Download Markup",
+    svgIcon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3ZM18 13l-1.5-1.5M2 7h12M2 12h7M2 17h5"/></svg>`,
+    renderControls(container, items) {
+      const item = items[0];
+      container.innerHTML = `
+        <div class="control-grid-2 markup-controls">
+          <div class="control-group">
+            <label class="control-label" for="markup-color">Color</label>
+            <input class="color-input" id="markup-color" type="color" value="#ef4444" />
+          </div>
+          <div class="control-group">
+            <label class="control-label markup-size-label" for="markup-width">Brush Size <span id="markup-width-value">6 px</span></label>
+            <input class="slider-input" id="markup-width" type="range" min="2" max="32" value="6" />
+          </div>
+        </div>
+        <div class="markup-actions">
+          <span class="control-hint">Draw on image</span>
+          <button type="button" class="action-btn markup-undo" id="markup-undo" disabled>Undo</button>
+        </div>
+        <div class="markup-preview">
+          <canvas id="markup-canvas" aria-label="Interactive image markup preview"></canvas>
+        </div>
+      `;
+
+      const canvas = container.querySelector("#markup-canvas");
+      const context = canvas.getContext("2d");
+      const colorInput = container.querySelector("#markup-color");
+      const widthInput = container.querySelector("#markup-width");
+      const widthValue = container.querySelector("#markup-width-value");
+      const undoButton = container.querySelector("#markup-undo");
+      const strokes = [];
+      const previewScale = Math.min(1, 900 / Math.max(item.width, item.height));
+      const previewWidth = Math.max(1, Math.round(item.width * previewScale));
+      const previewHeight = Math.max(1, Math.round(item.height * previewScale));
+      let activeStroke = null;
+
+      canvas.width = previewWidth;
+      canvas.height = previewHeight;
+
+      function drawStroke(ctx, stroke, scale) {
+        ctx.save();
+        ctx.strokeStyle = stroke.color;
+        ctx.lineWidth = stroke.width * scale;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(stroke.points[0].x * scale, stroke.points[0].y * scale);
+        stroke.points.slice(1).forEach((point) => ctx.lineTo(point.x * scale, point.y * scale));
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function redraw() {
+        context.clearRect(0, 0, previewWidth, previewHeight);
+        context.drawImage(item.img, 0, 0, previewWidth, previewHeight);
+        strokes.forEach((stroke) => drawStroke(context, stroke, previewScale));
+        if (activeStroke) drawStroke(context, activeStroke, previewScale);
+        undoButton.disabled = strokes.length === 0;
+      }
+
+      function getImagePoint(event) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: Math.max(0, Math.min(item.width, ((event.clientX - rect.left) / rect.width) * item.width)),
+          y: Math.max(0, Math.min(item.height, ((event.clientY - rect.top) / rect.height) * item.height))
+        };
+      }
+
+      widthInput.addEventListener("input", () => {
+        widthValue.textContent = `${widthInput.value} px`;
+      });
+
+      undoButton.addEventListener("click", () => {
+        strokes.pop();
+        redraw();
+      });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        activeStroke = {
+          points: [getImagePoint(event)],
+          color: colorInput.value,
+          width: Number(widthInput.value)
+        };
+        canvas.setPointerCapture(event.pointerId);
+        redraw();
+      });
+
+      canvas.addEventListener("pointermove", (event) => {
+        if (!activeStroke) return;
+        activeStroke.points.push(getImagePoint(event));
+        redraw();
+      });
+
+      function finishDrawing() {
+        if (!activeStroke) return;
+        strokes.push(activeStroke);
+        activeStroke = null;
+        redraw();
+      }
+
+      canvas.addEventListener("pointerup", finishDrawing);
+      canvas.addEventListener("pointercancel", finishDrawing);
+      container._markupStrokes = strokes;
+      container._drawMarkupStroke = drawStroke;
+      redraw();
+    },
+    async process(items, container) {
+      const item = items[0];
+      const format = item.type === "image/jpeg" || item.type === "image/webp" ? item.type : "image/png";
+      const strokes = container._markupStrokes;
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = item.width;
+      canvas.height = item.height;
+      if (format === "image/jpeg") {
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      context.drawImage(item.img, 0, 0);
+      strokes.forEach((stroke) => container._drawMarkupStroke(context, stroke, 1));
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob((result) => {
+          if (result) resolve(result);
+          else reject(new Error("Could not export the marked-up image."));
+        }, format, 0.92);
+      });
+      const extension = blob.type === "image/jpeg" ? "jpg" : blob.type === "image/webp" ? "webp" : "png";
+      const baseName = item.name.replace(/\.[^/.]+$/, "");
+      ImageEngine.download(blob, `${baseName}-marked.${extension}`);
+      return [{ blob }];
     }
   },
 

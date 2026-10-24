@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Primary Plane Body -->
+  <path d="M26.8 5.2 13.5 25.8l-2.4-9.6-8.5-4.4L26.8 5.2Z" fill="#2563eb"/>
+  <!-- Fold Line -->
+  <path d="m11.1 16.2 8.5-7.4" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Pixel Blocks -->
+  <rect x="21" y="21" width="4" height="4" rx="1" fill="#10b981"/>
+  <rect x="15" y="23" width="3.5" height="3.5" rx="0.8" fill="#f43f5e"/>
+</svg>

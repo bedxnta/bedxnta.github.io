@@ -318,16 +318,122 @@ class PixelPlaneApp {
     this.loadedImages.forEach((item, index) => {
       const row = document.createElement("div");
       row.className = "file-row";
+      row.dataset.fileIndex = index;
 
-      const ext = item.name.split(".").pop().toUpperCase();
+      const orderControls = this.selectedTool.id === "pdf"
+        ? `
+          <span class="file-row-order">
+            <button type="button" class="file-row-drag" aria-label="Drag to reorder page ${index + 1}" title="Drag to reorder">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h1M10 3h1M5 8h1M10 8h1M5 13h1M10 13h1" /></svg>
+            </button>
+            <button type="button" class="file-row-move" data-move="-1" aria-label="Move page ${index + 1} up" title="Move up" ${index === 0 ? "disabled" : ""}>↑</button>
+            <button type="button" class="file-row-move" data-move="1" aria-label="Move page ${index + 1} down" title="Move down" ${index === this.loadedImages.length - 1 ? "disabled" : ""}>↓</button>
+          </span>
+        `
+        : "";
       row.innerHTML = `
         <span class="file-row-thumb"><img src="${item.dataUrl}" alt="" /></span>
         <span class="file-row-info">
           <span class="file-row-name">${item.name}</span>
           <span class="file-row-meta">${item.width} × ${item.height} px · ${ImageEngine.formatBytes(item.size)}</span>
         </span>
+        ${orderControls}
         <button type="button" class="file-row-remove" title="Remove" aria-label="Remove image">×</button>
       `;
+
+      row.querySelectorAll(".file-row-move").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetIndex = index + Number(button.dataset.move);
+          if (targetIndex < 0 || targetIndex >= this.loadedImages.length) return;
+          const previousPositions = this.captureFileRowPositions();
+          [this.loadedImages[index], this.loadedImages[targetIndex]] = [
+            this.loadedImages[targetIndex],
+            this.loadedImages[index]
+          ];
+          this.renderLoadedFiles();
+          this.animateFileRowPositions(previousPositions);
+        });
+      });
+
+      const dragHandle = row.querySelector(".file-row-drag");
+      if (dragHandle) {
+        let dragging = false;
+        const originalItems = this.loadedImages.slice();
+
+        dragHandle.addEventListener("pointerdown", (event) => {
+          event.preventDefault();
+          dragging = true;
+          const rowRect = row.getBoundingClientRect();
+          const pointerOffsetX = event.clientX - rowRect.left;
+          const pointerOffsetY = event.clientY - rowRect.top;
+          const placeholder = document.createElement("div");
+          placeholder.className = "file-row-placeholder";
+          placeholder.style.height = `${rowRect.height}px`;
+          placeholder.dataset.fileIndex = index;
+          row.before(placeholder);
+          row.classList.add("file-row-dragging");
+          row.style.width = `${rowRect.width}px`;
+          row.style.left = `${rowRect.left}px`;
+          row.style.top = `${rowRect.top}px`;
+          row.style.height = `${rowRect.height}px`;
+          row.style.position = "fixed";
+          row.style.zIndex = "20";
+          row.style.pointerEvents = "none";
+          row.style.margin = "0";
+          row.style.boxSizing = "border-box";
+          this.dialog.appendChild(row);
+          this.dialog.setPointerCapture(event.pointerId);
+
+          const moveHandler = (moveEvent) => {
+            row.style.left = `${moveEvent.clientX - pointerOffsetX}px`;
+            row.style.top = `${moveEvent.clientY - pointerOffsetY}px`;
+
+            const remainingRows = Array.from(this.fileList.children).filter(
+              (fileRow) => fileRow !== placeholder
+            );
+            const targetIndex = remainingRows.findIndex((fileRow) => {
+              const targetRect = fileRow.getBoundingClientRect();
+              return moveEvent.clientY < targetRect.top + targetRect.height / 2;
+            });
+            const referenceRow = targetIndex < 0 ? null : remainingRows[targetIndex];
+            if (
+              (referenceRow && placeholder.nextElementSibling === referenceRow) ||
+              (!referenceRow && placeholder === this.fileList.lastElementChild)
+            ) {
+              return;
+            }
+
+            const previousPositions = this.captureFileRowPositions(originalItems);
+            this.fileList.insertBefore(placeholder, referenceRow);
+            this.animateFileRowPositions(previousPositions, originalItems);
+          };
+
+          const finishDragging = (finishEvent) => {
+            if (!dragging) return;
+            dragging = false;
+            this.dialog.removeEventListener("pointermove", moveHandler);
+            this.dialog.removeEventListener("pointerup", finishDragging);
+            this.dialog.removeEventListener("pointercancel", finishDragging);
+            if (this.dialog.hasPointerCapture(finishEvent.pointerId)) {
+              this.dialog.releasePointerCapture(finishEvent.pointerId);
+            }
+
+            const previousPositions = this.captureFileRowPositions(originalItems);
+            row.classList.remove("file-row-dragging");
+            row.removeAttribute("style");
+            placeholder.replaceWith(row);
+            this.loadedImages = Array.from(this.fileList.children, (fileRow) =>
+              originalItems[Number(fileRow.dataset.fileIndex)]
+            );
+            this.renderLoadedFiles();
+            this.animateFileRowPositions(previousPositions);
+          };
+
+          this.dialog.addEventListener("pointermove", moveHandler);
+          this.dialog.addEventListener("pointerup", finishDragging);
+          this.dialog.addEventListener("pointercancel", finishDragging);
+        });
+      }
 
       row.querySelector(".file-row-remove").addEventListener("click", (e) => {
         e.stopPropagation();
@@ -350,6 +456,32 @@ class PixelPlaneApp {
     if (hasImages) {
       this.processLabel.textContent = this.selectedTool.actionLabel || "Process Image";
     }
+  }
+
+  captureFileRowPositions(items = this.loadedImages) {
+    const rows = Array.from(this.fileList.children);
+    const positions = new Map(
+      rows.map((row) => [
+        items[Number(row.dataset.fileIndex)],
+        row.getBoundingClientRect().top
+      ])
+    );
+    rows.forEach((row) => row.getAnimations().forEach((animation) => animation.cancel()));
+    return positions;
+  }
+
+  animateFileRowPositions(previousPositions, items = this.loadedImages) {
+    this.fileList.querySelectorAll(".file-row").forEach((row) => {
+      const previousTop = previousPositions.get(items[Number(row.dataset.fileIndex)]);
+      if (previousTop === undefined) return;
+      const offsetY = previousTop - row.getBoundingClientRect().top;
+      if (offsetY === 0) return;
+
+      row.animate(
+        [{ transform: `translateY(${offsetY}px)` }, { transform: "translateY(0)" }],
+        { duration: 220, easing: "ease-out" }
+      );
+    });
   }
 
   async renderToolOptions() {

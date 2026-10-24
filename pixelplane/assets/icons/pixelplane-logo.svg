@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none">
+  <!-- Brand Icon -->
+  <g transform="translate(4, 4)">
+    <rect width="40" height="40" rx="10" fill="#2563eb"/>
+    <path d="M31 7.5 16 30.5l-3-11-9.5-5L31 7.5Z" fill="#ffffff"/>
+    <path d="m13 19.5 10.5-9" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+    <rect x="26" y="25" width="5.5" height="5.5" rx="1.5" fill="#10b981"/>
+    <rect x="18.5" y="27.5" width="4.5" height="4.5" rx="1" fill="#f59e0b"/>
+  </g>
+
+  <!-- Wordmark Text -->
+  <text x="56" y="31" font-family="'Manrope', -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.8" fill="#0f172a">pixelplane</text>
+  
+  <!-- STUDIO Badge -->
+  <rect x="178" y="17" width="52" height="18" rx="9" fill="rgba(37, 99, 235, 0.12)" stroke="#2563eb" stroke-width="1"/>
+  <text x="204" y="29.5" font-family="'DM Sans', sans-serif" font-size="9" font-weight="800" letter-spacing="0.8" fill="#2563eb" text-anchor="middle">STUDIO</text>
+</svg>

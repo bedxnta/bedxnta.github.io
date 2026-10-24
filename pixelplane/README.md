@@ -20,7 +20,10 @@
 | **Compress Image** | Optimize | Smart lossy/lossless compression with live size estimation and WebP/JPEG conversion. |
 | **Resize Image** | Transform | Scale pixel dimensions with aspect ratio lock and social media presets (1:1, 9:16, 720p, 1080p). |
 | **Crop Image** | Transform | Interactive canvas crop box with aspect ratio presets (Freeform, 1:1, 16:9, 9:16, 4:3, 3:2). |
+| **Image Splitter** | Transform | Preview and split an image into a configurable rows-by-columns grid, then download all tiles together as a ZIP. |
+| **Image Markup** | Transform | Draw colored brush strokes over an interactive image preview and undo strokes before downloading. |
 | **Convert Format** | Convert | Switch between WebP, JPEG, and PNG with quality tuning and transparent background fill choice. |
+| **Image to PDF** | Convert | Combine images into a multi-page PDF with A4 or US Letter pages, portrait or landscape orientation, and adjustable page order. |
 | **Rotate & Flip** | Transform | 90° CW/CCW rotations, 180° turns, and horizontal/vertical mirroring. |
 | **Watermark & Stamp** | Optimize | Text watermark overlay with font size, opacity, color picker, and 9-point anchor alignment. |
 | **Adjust & Filter** | Transform | Tune brightness, contrast, saturation, soft blur, and quick presets (B&W, Warm Vintage, Color Pop). |
