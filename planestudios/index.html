@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="PlaneStudios is a growing family of thoughtful tools, starting with PixelPlane."
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>PlaneStudios — A family of useful tools</title>
+    <link rel="icon" type="image/svg+xml" href="../pixelplane/favicon.svg" />
+    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="PlaneStudios home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M27 5 13.7 25.6l-2.4-9.5L3 11.7 27 5Z" fill="currentColor" />
+            <path d="m11.3 16.1 8.5-7.3" stroke="white" stroke-width="1.6" stroke-linecap="round" />
+            <circle cx="23.5" cy="23.5" r="2" fill="#10b981" />
+          </svg>
+        </span>
+        <span>PlaneStudios</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#apps">Apps</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+          aria-pressed="false"
+        >
+          <span class="theme-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+        </button>
+        <a class="header-cta" href="#apps">Explore apps <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> ONE STUDIO · MANY USEFUL TOOLS</div>
+          <h1 aria-label="Tools that click, fly, and work.">
+            Tools that<br />just <span class="accent-text" id="hero-word" aria-hidden="true">click.</span>
+          </h1>
+          <p>
+            PlaneStudios is home to a growing collection of focused, easy-to-use apps. Different tools for different jobs, made with a shared care for clarity and craft.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#apps">Explore the apps <span aria-hidden="true">↓</span></a>
+            <a class="text-button" href="../">Back to my site <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="studio-note">
+            <span class="note-mark" aria-hidden="true">✳</span>
+            A small independent studio by Bedanta.
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="PlaneStudios app cards arranged around a central plane symbol">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="orbit-center" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M27 5 13.7 25.6l-2.4-9.5L3 11.7 27 5Z" fill="currentColor" />
+              <path d="m11.3 16.1 8.5-7.3" stroke="white" stroke-width="1.6" stroke-linecap="round" />
+              <circle cx="23.5" cy="23.5" r="2" fill="#10b981" />
+            </svg>
+          </div>
+          <div class="orbit-card orbit-card-top">
+            <span class="mini-icon pixel-icon" aria-hidden="true">P</span>
+            <span><strong>PixelPlane</strong><small>IMAGE STUDIO</small></span>
+            <span class="mini-status" aria-label="Available"></span>
+          </div>
+          <div class="orbit-card orbit-card-bottom">
+            <span class="mini-icon plane-icon" aria-hidden="true">✦</span>
+            <span><strong>More to come</strong><small>IN THE WORKS</small></span>
+            <span class="mini-dots" aria-hidden="true">···</span>
+          </div>
+          <span class="art-label">MADE TO BE USEFUL</span>
+        </div>
+      </section>
+
+      <section class="apps-section" id="apps">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">THE PLANE COLLECTION</div>
+            <h2>Pick a plane.</h2>
+          </div>
+          <p>Each app has its own purpose, with the same thoughtful approach.</p>
+        </div>
+
+        <div class="app-grid">
+          <article class="app-card">
+            <div class="app-card-top">
+              <img src="../pixelplane/assets/icons/pixelplane-icon.svg" alt="" />
+              <span class="app-status"><span></span> AVAILABLE</span>
+            </div>
+            <div class="app-category">IMAGE TOOLS</div>
+            <h3>PixelPlane</h3>
+            <p>Resize, crop, convert, and polish images in a private, browser-based studio.</p>
+            <a class="app-link" href="../pixelplane/">
+              Open PixelPlane <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+          <article class="app-card coming-soon">
+            <div class="app-card-top">
+              <span class="coming-icon" aria-hidden="true">✳</span>
+              <span class="app-status muted-status"><span></span> IN THE WORKS</span>
+            </div>
+            <div class="app-category">GROWING COLLECTION</div>
+            <h3>More tools ahead</h3>
+            <p>More focused tools will join the collection as they’re ready.</p>
+            <span class="app-link disabled-link">On the horizon <span aria-hidden="true">→</span></span>
+          </article>
+        </div>
+      </section>
+
+      <section class="about-section" id="about">
+        <span class="about-mark" aria-hidden="true">✳</span>
+        <div>
+          <div class="eyebrow">THE IDEA</div>
+          <h2>One studio.<br />Room for every idea.</h2>
+        </div>
+        <p>
+          PlaneStudios brings independent tools under one roof. Each app can stand on its own, while sharing a recognizable look and a simple promise: make the task easier.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="#home">PlaneStudios<span>✳</span></a>
+      <span>Thoughtful tools, one plane at a time.</span>
+      <a href="../">Made by Bedanta ↗</a>
+    </footer>
+  </body>
+</html>
