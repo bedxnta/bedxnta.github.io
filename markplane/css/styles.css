@@ -166,6 +166,13 @@ h1 { margin: 18px 0 16px; font-family: var(--font-display); font-size: clamp(40p
 .art-spark { position: absolute; top: 26px; right: 25px; color: var(--cobalt); font-size: 26px; }
 
 .editor-section { padding-block: 28px 70px; }
+.editor-page main { width: min(1440px, calc(100% - 48px)); }
+.editor-page-shell { display: flex; min-height: calc(100vh - 80px); flex-direction: column; padding-block: 22px 28px; }
+.editor-page .section-top { align-items: center; justify-content: flex-end; margin-bottom: 14px; }
+.editor-page .editor-grid { min-height: max(410px, calc(100vh - 285px)); }
+.editor-page .editor-pane textarea { resize: none; }
+.editor-page .markdown-preview { overflow-y: auto; }
+.editor-page .editor-footnote { margin-top: 12px; }
 .section-top { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
 .section-eyebrow { margin-bottom: 7px; font-size: 9px; }
 .section-top h2, .promise-heading h2 { margin-bottom: 6px; font-family: var(--font-display); font-size: clamp(23px, 3vw, 30px); font-weight: 800; letter-spacing: -1.1px; }
@@ -464,6 +471,10 @@ kbd { padding: 2px 5px; border: 1px solid var(--border); border-radius: 4px; bac
   .art-note { right: 1%; bottom: 3px; }
   .art-spark { top: 6px; right: 3%; }
   .editor-section { padding-block: 18px 47px; }
+  .editor-page main { width: calc(100% - 32px); }
+  .editor-page-shell { min-height: calc(100vh - 68px); padding-block: 18px 32px; }
+  .editor-page .section-top { gap: 16px; }
+  .editor-page .editor-grid { min-height: auto; }
   .section-top h2 { font-size: 25px; }
   .editor-actions { width: 100%; gap: 7px; }
   .editor-actions .secondary-button, .editor-actions .primary-button { flex: 1; padding-inline: 8px; font-size: 10px; white-space: nowrap; }

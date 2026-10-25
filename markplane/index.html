@@ -29,7 +29,7 @@
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-link active" href="#editor">Editor</a>
+        <a class="nav-link" href="editor.html">Editor</a>
         <a class="nav-link" href="how-it-works.html">How it works</a>
         <a class="nav-link" href="privacy.html">Privacy</a>
         <a class="nav-link" href="#creator">About Creator</a>
@@ -39,7 +39,7 @@
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false">
           <span class="theme-icon" aria-hidden="true">◐</span>
         </button>
-        <a class="header-cta" href="#editor">Start writing <span aria-hidden="true">↗</span></a>
+        <a class="header-cta" href="editor.html">Start writing <span aria-hidden="true">↗</span></a>
       </div>
     </header>
 
@@ -50,7 +50,7 @@
           <h1>Markdown, without<br />the <span class="accent-text">distractions.</span></h1>
           <p class="hero-description">A clear space to write, see your Markdown take shape, and keep your notes close. No account, no upload—just you and the page.</p>
           <div class="hero-actions">
-            <a class="primary-button" href="#editor">Open the editor <span class="button-arrow" aria-hidden="true">↓</span></a>
+            <a class="primary-button" href="editor.html">Open the editor <span class="button-arrow" aria-hidden="true">→</span></a>
             <span class="shortcut-hint">A little room to think, built right in.</span>
           </div>
           <div class="privacy-note"><span aria-hidden="true">✳</span> Your writing stays in this browser. Export a .md file whenever you like.</div>
@@ -71,59 +71,6 @@
           <div class="art-note"><span>✓</span> Saved on this device</div>
           <span class="art-spark">✳</span>
         </div>
-      </section>
-
-      <section class="editor-section" id="editor">
-        <div class="section-top">
-          <div>
-            <div class="eyebrow section-eyebrow">A SIMPLE SPACE FOR YOUR IDEAS</div>
-            <h2>Make something worth keeping.</h2>
-            <p class="section-description">Write on the left. Your formatted document appears on the right, instantly.</p>
-          </div>
-          <div class="editor-actions">
-            <button class="secondary-button" id="sample-button" type="button" title="Load a Markdown example">Load example</button>
-            <button class="secondary-button" id="copy-button" type="button">Copy Markdown</button>
-            <button class="primary-button download-button" id="download-button" type="button">Download .md <span aria-hidden="true">↓</span></button>
-          </div>
-        </div>
-
-        <div class="workspace">
-          <div class="workspace-topbar">
-            <label class="document-name-wrap">
-              <span class="visually-hidden">Document name</span>
-              <input id="document-name" type="text" value="Untitled" maxlength="80" aria-label="Document name" />
-              <span class="file-extension">.md</span>
-            </label>
-            <div class="save-state"><span class="save-dot" id="save-dot"></span><span id="save-status" role="status" aria-live="polite">Saved on this device</span></div>
-          </div>
-          <div class="toolbar" role="toolbar" aria-label="Markdown formatting">
-            <button type="button" data-action="bold" aria-label="Bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
-            <button type="button" data-action="italic" aria-label="Italic" title="Italic (Ctrl+I)"><em>I</em></button>
-            <span class="toolbar-divider"></span>
-            <button type="button" data-action="heading" aria-label="Heading" title="Heading">H</button>
-            <button type="button" data-action="quote" aria-label="Quote" title="Quote">❞</button>
-            <button type="button" data-action="ul" aria-label="Bulleted list" title="Bulleted list">☷</button>
-            <button type="button" data-action="ol" aria-label="Numbered list" title="Numbered list">1.</button>
-            <span class="toolbar-divider"></span>
-            <button type="button" data-action="link" aria-label="Link" title="Insert link">↗</button>
-            <button type="button" data-action="code" aria-label="Inline code" title="Inline code">&lt;/&gt;</button>
-          </div>
-          <div class="editor-grid">
-            <section class="editor-pane" aria-labelledby="write-label">
-              <div class="pane-heading"><span id="write-label">WRITE</span><span>Markdown</span></div>
-              <textarea id="markdown-input" spellcheck="false" aria-label="Write Markdown" placeholder="Start writing your Markdown here..."></textarea>
-            </section>
-            <section class="preview-pane" aria-labelledby="preview-label">
-              <div class="pane-heading"><span id="preview-label">PREVIEW</span><span>Live</span></div>
-              <article class="markdown-preview" id="markdown-preview" aria-live="polite"></article>
-            </section>
-          </div>
-          <div class="workspace-footer">
-            <span id="document-stats">0 words · 0 characters</span>
-            <span><kbd>Ctrl</kbd> + <kbd>S</kbd> to save locally</span>
-          </div>
-        </div>
-        <p class="editor-footnote"><span aria-hidden="true">🔒</span> Your document is stored locally in this browser. It is never uploaded.</p>
       </section>
 
       <section class="promise-section" id="how-it-works">
@@ -173,11 +120,10 @@
     <footer class="site-footer">
       <a class="footer-brand" href="./"><span class="brand-mark" aria-hidden="true"><span>M</span><i></i></span><span>MarkPlane</span></a>
       <span>A little more room to think. <span class="footer-badge">100% In-Browser</span></span>
-      <div class="footer-links"><a href="#editor">Editor</a><a href="how-it-works.html">How it works</a><a href="privacy.html">Privacy</a><a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a></div>
+      <div class="footer-links"><a href="editor.html">Editor</a><a href="how-it-works.html">How it works</a><a href="privacy.html">Privacy</a><a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a></div>
       <span>Part of the PlaneStudios family ✦</span>
     </footer>
 
     <script src="js/theme.js" defer></script>
-    <script src="js/app.js" defer></script>
   </body>
 </html>

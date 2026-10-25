@@ -1,6 +1,6 @@
 # MarkPlane — Markdown, made simple
 
-MarkPlane is a responsive, client-side Markdown editor in the PlaneStudios family. It is built with plain HTML, CSS, and JavaScript and requires no build step or server-side service.
+MarkPlane is a responsive, client-side Markdown editor in the PlaneStudios family. Its landing page and editor are separate pages. It is built with plain HTML, CSS, and JavaScript and requires no build step or server-side service.
 
 ## Features
 
@@ -12,7 +12,7 @@ MarkPlane is a responsive, client-side Markdown editor in the PlaneStudios famil
 
 ## Run locally
 
-From the repository root, serve the static site with any local HTTP server and open `/markplane/`. For example:
+From the repository root, serve the static site with any local HTTP server and open `/markplane/` for the landing page or `/markplane/editor.html` to write. For example:
 
 ```bash
 python -m http.server 8000
