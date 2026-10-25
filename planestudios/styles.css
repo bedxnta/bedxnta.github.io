@@ -564,6 +564,129 @@ a.app-link:hover span {
   background: color-mix(in srgb, var(--surface) 70%, var(--surface-soft));
 }
 
+.sponsor-section {
+  margin: -34px 0 78px;
+}
+
+.sponsor-heading {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.sponsor-heading h2 {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1.1;
+}
+
+.sponsor-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.sponsor-label span {
+  color: var(--accent);
+}
+
+.sponsor-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid var(--border-hover);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 0% 100%, var(--accent-glow), transparent 40%),
+    var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sponsor-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.sponsor-logo {
+  width: 170px;
+  height: 62px;
+  display: block;
+  padding: 9px;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--surface-soft);
+}
+
+.sponsor-copy {
+  min-width: 0;
+}
+
+.sponsor-category {
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.sponsor-copy h3 {
+  margin: 4px 0 5px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+
+.sponsor-copy p {
+  max-width: 590px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.sponsor-link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sponsor-link:hover {
+  transform: translateY(-1px);
+  background: var(--accent-dark);
+}
+
+.sponsor-link span {
+  font-size: 14px;
+}
+
 .about-section {
   margin-bottom: 78px;
   padding: 34px;
@@ -678,6 +801,20 @@ button:focus-visible {
     grid-template-columns: auto 1fr;
   }
 
+  .sponsor-section {
+    margin: -16px 0 54px;
+  }
+
+  .sponsor-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 20px;
+  }
+
+  .sponsor-link {
+    grid-column: 2;
+    justify-self: start;
+  }
+
   .about-section > p {
     grid-column: 2;
   }
@@ -765,6 +902,28 @@ button:focus-visible {
   .about-section {
     padding: 21px;
     gap: 17px;
+  }
+
+  .sponsor-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sponsor-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 19px;
+  }
+
+  .sponsor-logo {
+    width: min(100%, 170px);
+    height: 58px;
+  }
+
+  .sponsor-link {
+    grid-column: auto;
+    justify-self: stretch;
   }
 
   .about-section > p {
