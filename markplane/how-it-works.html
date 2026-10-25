@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Learn how MarkPlane edits, previews, and saves your Markdown entirely in your browser." />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>How it works — MarkPlane</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("markplane-theme");
+        document.documentElement.dataset.theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/theme.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MarkPlane home">
+        <span class="brand-mark" aria-hidden="true"><span>M</span><i></i></span>
+        <span>MarkPlane</span><span class="brand-badge">STUDIO</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#editor">Editor</a>
+        <a class="nav-link active" href="how-it-works.html" aria-current="page">How it works</a>
+        <a class="nav-link" href="privacy.html">Privacy</a>
+        <a class="nav-link" href="index.html#creator">About Creator</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">◐</span></button>
+        <a class="header-cta" href="index.html#editor">Start writing <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    <main class="content-page">
+      <header class="page-header">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> UNDER THE HOOD · CLIENT-SIDE BY DESIGN</div>
+        <h1 class="page-title">How MarkPlane works: write, preview, take it with you.</h1>
+        <p class="page-subtitle">MarkPlane turns your Markdown into a readable preview right in your browser. Your writing stays on your device until you choose to copy or download it.</p>
+      </header>
+      <article class="content-card">
+        <h2>A simple writing flow</h2>
+        <p>Each part of the editor runs locally, using standard browser features—no account or document service in the middle.</p>
+        <div class="pipeline-list">
+          <div class="pipeline-step"><span class="step-badge">01</span><div class="step-body"><h3>Write in Markdown</h3><p>Type in the editor or use the toolbar to add common Markdown syntax such as headings, emphasis, lists, links, and code.</p><span class="step-code">Text area → Markdown source</span></div></div>
+          <div class="pipeline-step"><span class="step-badge">02</span><div class="step-body"><h3>Preview as you go</h3><p>MarkPlane updates the preview as you type. It handles familiar Markdown blocks and escapes raw HTML rather than inserting it into the page.</p><span class="step-code">Markdown text → safe HTML preview</span></div></div>
+          <div class="pipeline-step"><span class="step-badge">03</span><div class="step-body"><h3>Save on this device</h3><p>The current document name and text are autosaved to this browser’s local storage. Use the same browser profile to reopen your draft later.</p><span class="step-code">Document → browser localStorage</span></div></div>
+          <div class="pipeline-step"><span class="step-badge">04</span><div class="step-body"><h3>Export when you’re ready</h3><p>Copy the Markdown to your clipboard or download a plain-text <code>.md</code> file to use in another editor or share yourself.</p><span class="step-code">Markdown text → clipboard or .md file</span></div></div>
+        </div>
+      </article>
+      <article class="content-card">
+        <h2>What the preview supports</h2>
+        <p>Headings, paragraphs, line breaks, bold and italic emphasis, strikethrough, ordered and unordered lists, task lists, blockquotes, horizontal rules, links, inline code, and fenced code blocks.</p>
+        <p>For safety, raw HTML is displayed as text. Links in the preview are limited to HTTP, HTTPS, mailto, or relative URLs.</p>
+      </article>
+      <article class="content-card">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item"><div class="faq-q"><span class="faq-q-icon">?</span>Does MarkPlane upload my notes?</div><p class="faq-a">No. Editing, previewing, saving, copying, and downloading happen locally in your browser. The Google Fonts stylesheet is an optional external resource used for the app’s typography.</p></div>
+          <div class="faq-item"><div class="faq-q"><span class="faq-q-icon">?</span>Where does autosave go?</div><p class="faq-a">The current document is stored in this browser’s local storage on this device. Clearing site data or using a different browser profile removes access to that local draft, so download important work.</p></div>
+          <div class="faq-item"><div class="faq-q"><span class="faq-q-icon">?</span>Can I use my Markdown elsewhere?</div><p class="faq-a">Yes. Copy the source or download it as a standard <code>.md</code> text file.</p></div>
+          <div class="faq-item"><div class="faq-q"><span class="faq-q-icon">?</span>What shortcuts are available?</div><p class="faq-a">Use Ctrl/⌘ + B for bold, Ctrl/⌘ + I for italic, and Ctrl/⌘ + S to save immediately in the browser.</p></div>
+        </div>
+      </article>
+      <div class="cta-banner"><h2>Ready to make a little room for ideas?</h2><p>Open the editor and start writing—your Markdown stays in your browser.</p><a class="primary-button" href="index.html#editor">Open MarkPlane <span class="button-arrow" aria-hidden="true">→</span></a></div>
+    </main>
+    <footer class="site-footer">
+      <a class="footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span>M</span><i></i></span><span>MarkPlane</span></a>
+      <span>A little more room to think. <span class="footer-badge">100% In-Browser</span></span>
+      <div class="footer-links"><a href="index.html#editor">Editor</a><a href="how-it-works.html">How it works</a><a href="privacy.html">Privacy</a><a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a></div>
+      <span>Part of the PlaneStudios family ✦</span>
+    </footer>
+  </body>
+</html>

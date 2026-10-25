@@ -801,6 +801,11 @@ body,
     font-size: 1rem;
 }
 
+.planestudio-apps {
+    display: grid;
+    gap: 12px;
+}
+
 .planestudio-app {
     position: relative;
     z-index: 1;

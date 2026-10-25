@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="MarkPlane privacy policy: how your Markdown drafts and preferences are handled in your browser." />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>Privacy — MarkPlane</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("markplane-theme");
+        document.documentElement.dataset.theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/theme.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MarkPlane home">
+        <span class="brand-mark" aria-hidden="true"><span>M</span><i></i></span>
+        <span>MarkPlane</span><span class="brand-badge">STUDIO</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#editor">Editor</a>
+        <a class="nav-link" href="how-it-works.html">How it works</a>
+        <a class="nav-link active" href="privacy.html" aria-current="page">Privacy</a>
+        <a class="nav-link" href="index.html#creator">About Creator</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">◐</span></button>
+        <a class="header-cta" href="index.html#editor">Start writing <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    <main class="content-page">
+      <header class="page-header">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR WORDS · YOUR DEVICE · YOUR CHOICE</div>
+        <h1 class="page-title">Privacy, by design.</h1>
+        <p class="page-subtitle">MarkPlane is a client-side Markdown editor. Your document is processed in the browser and is not uploaded to a MarkPlane document server.</p>
+      </header>
+      <article class="content-card">
+        <h2>Your writing stays in your browser</h2>
+        <p>Markdown editing and preview rendering are performed locally in the page. MarkPlane does not send your document text to an application backend. When you choose Copy or Download, your browser provides the clipboard or file download action.</p>
+        <div class="feature-grid-2">
+          <div class="feature-box"><span class="feature-box-icon">🔒</span><h3>No document uploads</h3><p>MarkPlane has no account system or document upload endpoint. Your draft is not transmitted to MarkPlane servers.</p></div>
+          <div class="feature-box"><span class="feature-box-icon">🧭</span><h3>You choose what leaves</h3><p>Copying text or downloading a file is initiated by you. Sharing or publishing an exported document is up to you.</p></div>
+        </div>
+      </article>
+      <article class="content-card">
+        <h2>What is stored on this device?</h2>
+        <p>MarkPlane uses your browser’s local storage for the current document and your theme preference:</p>
+        <ul>
+          <li><code>markplane-document</code> stores the document name and Markdown content for autosave.</li>
+          <li><code>markplane-theme</code> stores your light or dark theme preference.</li>
+        </ul>
+        <p>This data is kept in the browser profile on your device. It is not a cloud backup: clearing site data, changing browsers, or using another device may remove or hide the saved draft. Download important documents as <code>.md</code> files.</p>
+      </article>
+      <article class="content-card">
+        <h2>Third-party resources</h2>
+        <p>MarkPlane loads its typography from Google Fonts. Your browser may make requests to Google to retrieve those font files. The editor remains usable with system fonts if the font service is unavailable. Document text is not included in these font requests.</p>
+      </article>
+      <article class="content-card">
+        <h2>Your choices</h2>
+        <p>You can delete the saved draft and theme preference by clearing this site’s local storage in your browser’s site settings. To keep a copy, use the editor’s Download .md action before clearing site data.</p>
+        <p>This policy describes the behavior of the MarkPlane static client-side app. Hosting infrastructure or external services may have their own operational policies.</p>
+      </article>
+      <div class="cta-banner"><h2>Your draft belongs to you.</h2><p>Write locally, then export a Markdown file whenever you’re ready.</p><a class="primary-button" href="index.html#editor">Open MarkPlane <span class="button-arrow" aria-hidden="true">→</span></a></div>
+    </main>
+    <footer class="site-footer">
+      <a class="footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span>M</span><i></i></span><span>MarkPlane</span></a>
+      <span>A little more room to think. <span class="footer-badge">100% In-Browser</span></span>
+      <div class="footer-links"><a href="index.html#editor">Editor</a><a href="how-it-works.html">How it works</a><a href="privacy.html">Privacy</a><a href="https://bedanta.space" target="_blank" rel="noopener noreferrer">bedanta.space ↗</a></div>
+      <span>Part of the PlaneStudios family ✦</span>
+    </footer>
+  </body>
+</html>
