@@ -72,36 +72,49 @@ setInterval(() => {
     changingText.classList.add("text-change");
 }, 2500);
 
-const updateScrollProgress = () => {
-    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
-    const normalizedProgress = Math.min(Math.max(progress, 0), 1);
-    scrollProgress.style.setProperty("--scroll-progress", String(normalizedProgress));
+let activeSectionId = null;
+let documentHeight = 0;
+let scrollableHeight = 0;
+let sectionOffsets = [];
+let markerPositions = [];
+let isCompact = false;
 
-    if (!prefersReducedMotion.matches) {
-        document.documentElement.style.setProperty(
-            "--background-parallax-y",
-            `${window.scrollY * -0.04}px`
-        );
-    }
+const measureScrollLayout = () => {
+    documentHeight = document.documentElement.scrollHeight;
+    scrollableHeight = documentHeight - window.innerHeight;
+    sectionOffsets = sections.map((section) => section.getBoundingClientRect().top + window.scrollY);
 
-    const activationLine = window.scrollY + 32;
-    const sectionOffsets = sections.map((section) => section.getBoundingClientRect().top + window.scrollY);
     const navBounds = scrollNav.getBoundingClientRect();
-    const isCompact = window.matchMedia("(max-width: 1100px)").matches;
-    const markerPositions = scrollLinks.map((link) => {
+    isCompact = window.matchMedia("(max-width: 1100px)").matches;
+    markerPositions = scrollLinks.map((link) => {
         const bounds = link.getBoundingClientRect();
         return isCompact
             ? bounds.left - navBounds.left + bounds.width / 2 - scrollMarker.offsetWidth / 2
             : bounds.top - navBounds.top + bounds.height / 2 - scrollMarker.offsetHeight / 2;
     });
+};
 
+const updateScrollProgress = () => {
+    const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+    const normalizedProgress = Math.min(Math.max(progress, 0), 1);
+    scrollProgress.style.setProperty("--scroll-progress", String(normalizedProgress));
+
+    if (isCompact && !prefersReducedMotion.matches) {
+        document.documentElement.style.setProperty(
+            "--background-parallax-y",
+            `${window.scrollY * -0.04}px`
+        );
+    } else {
+        document.documentElement.style.removeProperty("--background-parallax-y");
+    }
+
+    const activationLine = window.scrollY + 32;
     let activeIndex = 0;
     while (activeIndex < sectionOffsets.length - 1 && activationLine >= sectionOffsets[activeIndex + 1]) {
         activeIndex++;
     }
 
-    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    if (window.scrollY + window.innerHeight >= documentHeight - 2) {
         activeIndex = sections.length - 1;
     }
 
@@ -115,29 +128,41 @@ const updateScrollProgress = () => {
 };
 
 let progressFrame = 0;
-const scheduleProgressUpdate = () => {
+let layoutNeedsMeasuring = false;
+const scheduleProgressUpdate = (measureLayout = false) => {
+    layoutNeedsMeasuring = layoutNeedsMeasuring || measureLayout;
+
     if (progressFrame) {
         return;
     }
 
     progressFrame = window.requestAnimationFrame(() => {
+        if (layoutNeedsMeasuring) {
+            measureScrollLayout();
+            layoutNeedsMeasuring = false;
+        }
         updateScrollProgress();
         progressFrame = 0;
     });
 };
 
 window.addEventListener("scroll", scheduleProgressUpdate, { passive: true });
-window.addEventListener("resize", scheduleProgressUpdate);
+window.addEventListener("resize", () => scheduleProgressUpdate(true));
 if ("ResizeObserver" in window) {
-    new ResizeObserver(scheduleProgressUpdate).observe(document.querySelector(".container"));
+    new ResizeObserver(() => scheduleProgressUpdate(true)).observe(document.querySelector(".container"));
 }
 
 const setActiveSection = (sectionId) => {
+    if (sectionId === activeSectionId) {
+        return;
+    }
+
     const activeLink = scrollLinks.find((link) => link.hash === `#${sectionId}`);
     if (!activeLink) {
         return;
     }
 
+    activeSectionId = sectionId;
     scrollLinks.forEach((link) => {
         if (link === activeLink) {
             link.setAttribute("aria-current", "location");
@@ -149,4 +174,5 @@ const setActiveSection = (sectionId) => {
     scrollCurrent.textContent = activeLink.dataset.sectionName;
 };
 
+measureScrollLayout();
 updateScrollProgress();
