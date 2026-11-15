@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f3ef">
+<meta name="darkreader-lock">
 <title>8051 Instruction Set Reference</title>
 <style>
   :root{
@@ -587,6 +589,184 @@
   }
 
 </style>
+<link rel="stylesheet" href="styles.css">
+<style>
+  :root{
+    --bg:var(--paper);
+    --panel:var(--surface);
+    --panel2:var(--soft);
+    --border:var(--line);
+    --text:var(--ink);
+    --amber:var(--accent);
+    --cyan:var(--accent);
+    --green:var(--ink);
+    --red:#b54747;
+  }
+  :root[data-theme="dark"]{--red:#e58b8b;}
+  body{
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"NType 82",Arial,sans-serif;
+    line-height:1.55;
+    isolation:isolate;
+  }
+  a{color:var(--accent);}
+  .app{max-width:1450px;min-height:100vh;margin:0 auto;}
+  .sidebar{
+    width:270px;
+    padding:20px 0 40px;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+  }
+  .sidebar-header{padding:0 18px 16px;border-bottom-color:var(--line);}
+  .sidebar-header h1{
+    color:var(--ink);
+    font-family:"NType 82",Arial,sans-serif;
+    font-size:1.1rem;
+    letter-spacing:-.03em;
+  }
+  .sidebar-header p{color:var(--muted);font-family:"NType 82",Arial,sans-serif;}
+  .search-box input,.topbar-search input{
+    color:var(--ink);
+    background:var(--card);
+    border-color:var(--line);
+    border-radius:0;
+    box-shadow:none;
+    font-family:"NType 82",Arial,sans-serif;
+  }
+  .search-box input:focus,.topbar-search input:focus{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 16%,transparent);}
+  .nav-group-label{
+    color:var(--muted);
+    font-family:"NDot","NType 82",sans-serif;
+    font-size:.62rem;
+  }
+  .nav-list li a{
+    color:var(--ink);
+    font-family:"NType 82",Arial,sans-serif;
+    border-left-color:transparent;
+  }
+  .nav-list li a:hover,.nav-list li a.active{
+    background:var(--soft);
+    border-left-color:var(--accent);
+    color:var(--ink);
+  }
+  .nav-list li a .fn{font-family:"NType 82",Arial,sans-serif;color:var(--muted);}
+  main{max-width:1080px;padding:0 46px 90px;}
+  .site-header{min-height:88px;margin-bottom:32px;}
+  .header-note,.theme-toggle,.hero-kicker,.hero-link{
+    font-family:"NDot","NType 82",sans-serif;
+  }
+  .theme-toggle{
+    color:var(--ink);
+    border-color:var(--line);
+    background:transparent;
+  }
+  .theme-toggle:hover{border-color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent);}
+  .theme-toggle-icon{width:16px;height:16px;}
+  .page-title.window{
+    min-height:350px;
+    margin:0 0 48px;
+    padding:0;
+    border:1px solid var(--line);
+    background:var(--soft);
+  }
+  .page-title .window-content{
+    min-height:inherit;
+    padding:48px clamp(28px,6vw,72px);
+    display:flex;
+    align-items:center;
+  }
+  .instruction-hero-copy{max-width:700px;}
+  .instruction-hero-copy .hero-kicker{margin-bottom:20px;color:var(--muted);}
+  .page-title h1{
+    margin:0;
+    color:var(--ink);
+    font-family:"NType 82",Arial,sans-serif;
+    font-size:clamp(3.2rem,7.2vw,6.4rem);
+    font-weight:700;
+    letter-spacing:-.065em;
+    line-height:.94;
+  }
+  .page-title p{max-width:650px;margin:20px 0 0;color:var(--muted);font-size:1.05rem;}
+  .page-title p a{color:var(--accent);}
+  .hero-link{display:inline-flex;margin-top:24px;color:var(--ink);}
+  section.opcode-map,.instr-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:0;
+    box-shadow:none;
+  }
+  section.opcode-map{margin-bottom:48px;padding:24px;scroll-margin-top:24px;}
+  section.opcode-map h2{
+    margin:0 0 16px;
+    color:var(--ink);
+    font-family:"NType 82",Arial,sans-serif;
+    font-size:1.6rem;
+    font-weight:600;
+    letter-spacing:-.04em;
+  }
+  .opcode-map table{font-family:Consolas,"SFMono-Regular","Courier New",monospace;}
+  .opcode-map th,.opcode-map td{border-color:var(--line);}
+  .opcode-map th,.opcode-map td.rowhead{background:var(--soft);color:var(--ink);}
+  .opcode-map td.instr{color:var(--ink);}
+  .opcode-map td.instr:hover{background:var(--soft);color:var(--accent);}
+  .opcode-legend{color:var(--muted);}
+  .instr-card{margin-bottom:12px;scroll-margin-top:24px;}
+  .instr-summary{padding:16px 22px;}
+  .instr-summary:hover{background:var(--soft);}
+  .instr-card[open] .instr-summary{border-bottom-color:var(--line);}
+  .instr-summary .chev{color:var(--muted);}
+  .instr-card[open] .instr-summary .chev{color:var(--accent);}
+  .instr-card h2{color:var(--ink);font-family:Consolas,"SFMono-Regular","Courier New",monospace;}
+  .instr-card h2 .fn{font-family:"NType 82",Arial,sans-serif;color:var(--muted);}
+  .meta-row div,.flag-none,.see-also{color:var(--muted);}
+  .meta-row span{color:var(--ink);}
+  .syntax,table.opset th,.flag-badge,.desc code{
+    background:var(--soft);
+    border-color:var(--line);
+  }
+  .syntax{color:var(--ink);}
+  table.opset th{color:var(--ink);}
+  table.opset th,table.opset td{border-color:var(--line);}
+  table.opset td:nth-child(1){color:var(--ink);}
+  table.opset td:nth-child(2){color:var(--accent);}
+  .flag-badge{color:var(--accent);}
+  .desc{color:var(--ink);}
+  .see-also{border-top-color:var(--line);}
+  .search-suggestions{background:var(--surface);border-color:var(--line);box-shadow:0 12px 32px var(--shadow);}
+  .search-suggestion{color:var(--ink);}
+  .search-suggestion:hover,.search-suggestion.active{background:var(--soft);}
+  .search-suggestion .suggestion-name{color:var(--accent);}
+  .back-to-top{
+    background:var(--surface);
+    color:var(--accent);
+    border:1px solid var(--line);
+    border-radius:0;
+    box-shadow:0 8px 24px var(--shadow);
+  }
+  .mobile-topbar{background:var(--surface);border-bottom-color:var(--line);}
+  .mobile-topbar h1{color:var(--ink);font-family:"NType 82",Arial,sans-serif;}
+  .menu-btn{background:var(--soft);border-color:var(--line);border-radius:0;color:var(--ink);}
+  .sidebar-overlay{background:rgba(17,17,17,.42);}
+  ::-webkit-scrollbar-track{background:var(--paper);}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:0;}
+  @media(max-width:820px){
+    .sidebar{background:var(--surface);border-right-color:var(--line);}
+    main{padding:0 16px 60px;}
+    .site-header{min-height:76px;margin-bottom:24px;}
+    .page-title.window{min-height:300px;margin-bottom:36px;}
+    .page-title .window-content{padding:36px 26px;}
+    .instr-summary{padding:14px 16px;}
+    .instr-body{padding:16px;}
+  }
+  @media(max-width:620px){
+    .header-note{display:none;}
+    .page-title h1{font-size:clamp(2.8rem,13vw,4.6rem);}
+    .page-title.window{min-height:280px;}
+    section.opcode-map{padding:18px 14px;}
+  }
+</style>
 </head>
 <body>
 <div class="mobile-topbar">
@@ -620,9 +800,30 @@
   </nav>
 
   <main>
-    <div class="page-title">
-      <h1>8051 Instruction Set</h1>
-    </div>
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Bedanta D home">BD<span>.</span></a>
+      <div class="header-actions">
+        <span class="header-note">MICROCONTROLLER REFERENCE</span>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <svg class="theme-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <path d="M8 1.75a6.25 6.25 0 0 0 0 12.5z" fill="currentColor" />
+          </svg>
+          <span class="theme-toggle-label">DARK</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-title window hero" id="reference">
+      <div class="window-content">
+        <div class="instruction-hero-copy">
+          <p class="hero-kicker"><span class="status-dot" aria-hidden="true"></span> MCS-51 · QUICK REFERENCE</p>
+          <h1>8051<br>Instruction Set<span class="accent-dot">.</span></h1>
+          <p>Browse the opcode map or search the instruction list for syntax, operation details, timing, and affected flags.</p>
+          <a class="hero-link" href="#opcode-map">BROWSE OPCODES <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
 
     <section class="opcode-map" id="opcode-map">
       <h2>Instructions by Opcode</h2>
@@ -1642,6 +1843,26 @@ ADDC A,operand</div>
 <button class="back-to-top" id="backToTop" title="Back to top">&uarr;</button>
 
 <script>
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const savedTheme = localStorage.getItem('bedanta-theme');
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    document.documentElement.dataset.theme = savedTheme;
+  }
+  const syncThemeToggle = () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    themeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+    themeToggle.querySelector('.theme-toggle-label').textContent = isDark ? 'LIGHT' : 'DARK';
+    themeColor.content = isDark ? '#111111' : '#f3f3ef';
+  };
+  syncThemeToggle();
+  themeToggle.addEventListener('click', () => {
+    document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('bedanta-theme', document.documentElement.dataset.theme);
+    syncThemeToggle();
+  });
+
   // Build sidebar nav list from instruction cards
   const navList = document.getElementById('navList');
   const cards = Array.from(document.querySelectorAll('.instr-card'));
