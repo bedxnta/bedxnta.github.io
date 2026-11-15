@@ -591,6 +591,13 @@
 </style>
 <link rel="stylesheet" href="styles.css">
 <style>
+  @font-face{
+    font-family:"NType 82 Mono";
+    src:url("fonts/ntype82mono.otf") format("opentype");
+    font-style:normal;
+    font-weight:100 900;
+    font-display:swap;
+  }
   :root{
     --bg:var(--paper);
     --panel:var(--surface);
@@ -601,6 +608,7 @@
     --cyan:var(--accent);
     --green:var(--ink);
     --red:#b54747;
+    --mono:"NType 82 Mono",monospace;
   }
   :root[data-theme="dark"]{--red:#e58b8b;}
   body{
@@ -706,7 +714,7 @@
     font-weight:600;
     letter-spacing:-.04em;
   }
-  .opcode-map table{font-family:Consolas,"SFMono-Regular","Courier New",monospace;}
+  .opcode-map table{font-family:var(--mono);}
   .opcode-map th,.opcode-map td{border-color:var(--line);}
   .opcode-map th,.opcode-map td.rowhead{background:var(--soft);color:var(--ink);}
   .opcode-map td.instr{color:var(--ink);}
@@ -718,7 +726,7 @@
   .instr-card[open] .instr-summary{border-bottom-color:var(--line);}
   .instr-summary .chev{color:var(--muted);}
   .instr-card[open] .instr-summary .chev{color:var(--accent);}
-  .instr-card h2{color:var(--ink);font-family:Consolas,"SFMono-Regular","Courier New",monospace;}
+  .instr-card h2{color:var(--ink);font-family:var(--mono);}
   .instr-card h2 .fn{font-family:"NType 82",Arial,sans-serif;color:var(--muted);}
   .meta-row div,.flag-none,.see-also{color:var(--muted);}
   .meta-row span{color:var(--ink);}
@@ -732,7 +740,7 @@
   table.opset td:nth-child(1){color:var(--ink);}
   table.opset td:nth-child(2){color:var(--accent);}
   .flag-badge{color:var(--accent);}
-  .desc{color:var(--ink);}
+  .desc{color:var(--ink);font-family:var(--mono);}
   .see-also{border-top-color:var(--line);}
   .search-suggestions{background:var(--surface);border-color:var(--line);box-shadow:0 12px 32px var(--shadow);}
   .search-suggestion{color:var(--ink);}
@@ -765,6 +773,40 @@
     .page-title h1{font-size:clamp(2.8rem,13vw,4.6rem);}
     .page-title.window{min-height:280px;}
     section.opcode-map{padding:18px 14px;}
+  }
+  body{font-size:110.25%;}
+  .sidebar-header h1{font-size:1.213rem;}
+  .sidebar-header p{font-size:11.6px;}
+  .nav-group-label{font-size:.684rem;}
+  .nav-list li a{font-size:14.3px;}
+  .nav-list li a .fn{font-size:12.1px;}
+  .search-box input,.topbar-search input{font-size:14.3px;}
+  .page-title h1{font-size:clamp(3.53rem,7.94vw,7.06rem);}
+  .page-title p{font-size:1.158rem;}
+  section.opcode-map h2{font-size:1.764rem;}
+  .opcode-map table{font-size:12.1px;}
+  .opcode-legend{font-size:13.2px;}
+  .instr-summary .chev{font-size:13.2px;}
+  .instr-card h2{font-size:20.95px;}
+  .instr-card h2 .fn{font-size:13.2px;}
+  .meta-row{font-size:14.3px;}
+  .syntax{font-size:14.3px;}
+  table.opset{font-size:13.8px;}
+  table.opset th{font-size:12.7px;}
+  .flag-badge{font-size:12.7px;}
+  .flag-none{font-size:13.2px;}
+  .desc{font-size:15.4px;}
+  .desc code{font-size:14.3px;}
+  .see-also{font-size:14.3px;}
+  .back-to-top{font-size:19.85px;}
+  .no-results{font-size:14.3px;}
+  .mobile-topbar h1{font-size:16px;}
+  .search-suggestion{font-size:14.3px;}
+  .search-suggestion .suggestion-desc{font-size:12.1px;}
+  .search-no-results{font-size:13.2px;}
+  .menu-btn{font-size:17.65px;}
+  @media(max-width:620px){
+    .page-title h1{font-size:clamp(3.09rem,14.33vw,5.07rem);}
   }
 </style>
 </head>
